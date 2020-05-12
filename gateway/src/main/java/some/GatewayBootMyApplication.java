@@ -11,7 +11,7 @@ import javax.servlet.ServletException;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class GatewayBootMyApplication extends SpringBootServletInitializer{ 
+public class GatewayBootMyApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(GatewayBootMyApplication.class, args);

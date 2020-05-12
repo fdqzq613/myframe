@@ -1,8 +1,6 @@
 package some.movie;
 
-import com.yoya.movie.common.RD;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.RewritePathGatewayFilterFactory;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -36,7 +34,7 @@ public class GatewayRoutes {
                         .setName("api")
                         .setFallbackUri("forward:/fallback"));
         
-		String url = RD.getApiUrl().startsWith("http")? RD.getApiUrl():"http:"+ RD.getApiUrl();
+		String url = "http://localhost:8081/api/";
 
         return builder.routes()
                 //basic proxy

@@ -1,13 +1,19 @@
-package some.movie.common;
+package com.some.web.service;
+
 
 import com.some.common.constants.SystemEnum;
 import com.some.common.result.RespResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class BaseController {
-	 private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
-	 /**
+import java.text.MessageFormat;
+
+/**
+ * 
+ * @version V1.0
+ * @author qzq
+ * @date   2019年11月8日
+ */
+public class CommonResultHandler {
+	/**
 	  * 统一返回RespResult
 	  * @param data
 	  * @return
@@ -55,5 +61,16 @@ public class BaseController {
 		return respResult;
 	}
 	
-
+	   /**
+	    * 格式化字符串
+	    * @param str
+	    * @param arguments
+	    * @return
+	    * @author qzq
+	    */
+	   protected String formatString(String str,Object ... arguments){
+		   
+		   return MessageFormat.format(str,  arguments);
+	   }
+	   
 }

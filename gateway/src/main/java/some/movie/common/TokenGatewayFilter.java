@@ -1,6 +1,6 @@
 package some.movie.common;
 
-import com.yoya.movie.common.result.RespResult;
+import com.some.common.result.RespResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
