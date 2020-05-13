@@ -16,6 +16,7 @@ public class SystemStartup {
 	public void init(ContextRefreshedEvent contextRefreshedEvent)  {
 		log.info("开始启动eureka-service系统。。。");
 
+		long start = System.currentTimeMillis();
 		log.info("eureka-service系统启动完成");
 	}
 }
