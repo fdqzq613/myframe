@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>eureka-service</artifactId>
+    <artifactId>rpc-interface</artifactId>
 
     <dependencies>
         <dependency>
@@ -30,12 +30,18 @@
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
 
         <!-- actuator监控信息完善 -->
         <dependency>
@@ -50,6 +56,17 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -58,7 +75,7 @@
     </dependencies>
     <!-- 插件配置 -->
     <build>
-        <finalName>eureka-service</finalName>
+        <finalName>rpc-interface</finalName>
         <plugins>
             <!-- compiler插件, 设定JDK版本 -->
             <plugin>
@@ -77,7 +94,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.some.ServiceBootMyApplication</mainClass>
+                    <mainClass>com.yoya.movie.BiBootMyApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

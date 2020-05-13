@@ -17,6 +17,8 @@
         <junit.version>4.12</junit.version>
         <some.common.version>1.0</some.common.version>
         <some.web-common.version>1.0</some.web-common.version>
+        <some.rpc-interface.version>1.0</some.rpc-interface.version>
+
         <spring.boot.version>2.0.1.RELEASE</spring.boot.version>
         <spring.cloud.version>2.0.1.RELEASE</spring.cloud.version>
         <spring.zuul.version>1.4.5.RELEASE</spring.zuul.version>
@@ -53,6 +55,11 @@
                 <groupId>com.some</groupId>
                 <artifactId>web-common</artifactId>
                 <version>${some.web-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.some</groupId>
+                <artifactId>rpc-interface</artifactId>
+                <version>${some.rpc-interface.version}</version>
             </dependency>
             <!-- spring boot -->
             <dependency>
@@ -441,5 +448,7 @@
         <module>common</module>
         <module>web-common</module>
         <module>eureka-service</module>
+        <module>eureka-client</module>
+        <module>rpc-interface</module>
     </modules>
 </project>
