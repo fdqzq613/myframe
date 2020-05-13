@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="GBK" ?>
 
 <configuration>
-	<property name="project_name" value="onemovi_movie_bi" />
+	<property name="project_name" value="eureka-client" />
 	<property name="LOG_HOME" value="${catalina.base}/logs" />
   
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
