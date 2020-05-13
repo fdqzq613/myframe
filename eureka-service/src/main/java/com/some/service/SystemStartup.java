@@ -17,7 +17,7 @@ public class SystemStartup {
 		log.info("开始启动eureka-service系统。。。");
 
 
-		
+
 		long start = System.currentTimeMillis();
 		log.info("eureka-service系统启动完成，耗时：{}",(System.currentTimeMillis()-start)/1000);
 	}
