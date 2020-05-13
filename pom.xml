@@ -480,5 +480,6 @@
         <module>eureka-service</module>
         <module>eureka-client</module>
         <module>rpc-interface</module>
+        <module>example</module>
     </modules>
 </project>
