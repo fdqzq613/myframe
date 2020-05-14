@@ -27,6 +27,7 @@ spring:
 
 
 
+
 #Eureka 相关配置
 eureka:
   client:

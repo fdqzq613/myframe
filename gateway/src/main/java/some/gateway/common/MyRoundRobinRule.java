@@ -6,6 +6,9 @@ import com.netflix.loadbalancer.Server;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * @description: RoundRobinRule
  * @vsersion: V1.0
@@ -32,6 +35,25 @@ public class MyRoundRobinRule extends RoundRobinRule {
        if(StringUtils.isEmpty(version)){
            version= MyLoadBalancerClientFilter.serverWebExchangeHolder.get().getRequest().getQueryParams().getFirst("version");
        }
+       //如果 env=dev 则跳转到非服务器ip上 用于开发前后端调试
+        String env= MyLoadBalancerClientFilter.serverWebExchangeHolder.get().getRequest().getHeaders().getFirst("env");
+        if(StringUtils.isEmpty(env)){
+            env= MyLoadBalancerClientFilter.serverWebExchangeHolder.get().getRequest().getQueryParams().getFirst("env");
+        }
+        if("dev".equals(env)){
+            //获取配置文件的服务器ip 进行排除
+            String serverIp="192.168.20.157";
+            List<Server> reachableServers = lb.getReachableServers();
+            Server devServer = null;
+            for(int i=0;i<reachableServers.size();i++){
+                Server server = reachableServers.get(i);
+                if(server.isAlive()&&!server.getHost().contains(serverIp)){
+                    devServer = server;
+                    break;
+                }
+            }
+            return devServer;
+        }
         return super.choose(lb, key);
     }
 }
