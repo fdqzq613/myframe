@@ -9,7 +9,7 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.gateway.route.builder.UriSpec;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import some.gateway.common.MyRoutePredicateFactory;
+import some.gateway.common.DevRoutePredicateFactory;
 import some.gateway.common.TokenGatewayFilter;
 import some.gateway.common.UrlGatewayFilterFactory;
 
@@ -70,8 +70,8 @@ public class GatewayRoutes {
 
 	
 	@Bean
-	public MyRoutePredicateFactory initMyRoutePredicateFactory(){
-		return new MyRoutePredicateFactory(MyRoutePredicateFactory.Config.class);
+	public DevRoutePredicateFactory initMyRoutePredicateFactory(){
+		return new DevRoutePredicateFactory(DevRoutePredicateFactory.Config.class);
 	}
 
 }

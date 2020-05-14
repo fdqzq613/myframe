@@ -8,20 +8,20 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * 自定义断言token校验
+ * 自定义断言,切换到指定断言ip
  * @version V1.0
  * @author qzq
  * @date   2020年3月31日
  */
-public class MyRoutePredicateFactory extends AbstractRoutePredicateFactory<MyRoutePredicateFactory.Config> {
+public class DevRoutePredicateFactory extends AbstractRoutePredicateFactory<DevRoutePredicateFactory.Config> {
 
-	
-	 
+
+
 
 	/**
 	 * @param configClass
 	 */
-	public MyRoutePredicateFactory(Class<Config> configClass) {
+	public DevRoutePredicateFactory(Class<Config> configClass) {
 		super(configClass);
 	}
 
@@ -34,21 +34,23 @@ public class MyRoutePredicateFactory extends AbstractRoutePredicateFactory<MyRou
 	 */
 	@Override
 	public Predicate<ServerWebExchange> apply(Config config) {
-		
+
 		return exchange -> {
             //判断header里有放token
             HttpHeaders headers = exchange.getRequest().getHeaders();
             List<String> header = headers.get(config.getHeaderName());
 			String value = exchange.getRequest().getHeaders().getFirst(config.getHeaderName());
+			//开启开发环境
+            if("true".equals(value)){
 
-
+			}
             return "true".equals(value);
         };
 	}
-	
-	
+
+
 	public static class Config {
-	     
+
         private String headerName;
 
         public String getHeaderName() {
