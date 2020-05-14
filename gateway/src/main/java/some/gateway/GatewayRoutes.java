@@ -66,6 +66,8 @@ public class GatewayRoutes {
                         .uri("lb://some-api-service")
                 ).build();
 	}
+
+
 	
 	@Bean
 	public MyRoutePredicateFactory initMyRoutePredicateFactory(){

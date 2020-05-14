@@ -481,5 +481,6 @@
         <module>eureka-client</module>
         <module>rpc-interface</module>
         <module>example</module>
+        <module>eureka-gray-client</module>
     </modules>
 </project>

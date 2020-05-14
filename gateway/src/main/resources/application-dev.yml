@@ -1,0 +1,38 @@
+server:
+  port: 8682
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: api
+          uri: lb://some-api-service
+          predicates:
+            - Path=/gray/**
+            - Weight=apiservice, 1
+          filters:
+            - Token
+            - RewritePath=/gray/(?<segment>.*),/$\{segment}
+        - id: api-gray
+          uri: lb://some-api-gray-service
+          predicates:
+            - Path=/gray/**
+            - Weight=apiservice, 2
+          filters:
+            - Token
+            - RewritePath=/gray/(?<segment>.*),/$\{segment}
+
+
+
+
+#Eureka 相关配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8085/eureka/
+  # 是否从其他的服务中心同步服务列表
+      fetch-registry: true
+  # 是否把自己作为服务注册到其他服务注册中心
+      register-with-eureka: false

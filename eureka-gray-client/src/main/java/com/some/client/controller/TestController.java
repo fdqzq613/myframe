@@ -1,4 +1,4 @@
-package com.some.client.core.controller;
+package com.some.client.controller;
 
 import com.some.common.result.RespResult;
 import com.some.rpc.api.IApiService;
@@ -27,8 +27,8 @@ public class TestController {
     @ApiOperation(value = "注册到eureka的服务", notes = "注册到eureka的服务", httpMethod = "GET")
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public RespResult<String> get() {
-        log.info("test");
-        return RespResult.create("test");
+        log.info("gray-test");
+        return RespResult.create("gray-test");
     }
 
 

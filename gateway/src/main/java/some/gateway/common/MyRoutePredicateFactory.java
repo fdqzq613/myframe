@@ -39,8 +39,10 @@ public class MyRoutePredicateFactory extends AbstractRoutePredicateFactory<MyRou
             //判断header里有放token
             HttpHeaders headers = exchange.getRequest().getHeaders();
             List<String> header = headers.get(config.getHeaderName());
-            //TODO token逻辑判断
-            return header!=null&&header.size() > 0;
+			String value = exchange.getRequest().getHeaders().getFirst(config.getHeaderName());
+
+
+            return "true".equals(value);
         };
 	}
 	
