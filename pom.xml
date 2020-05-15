@@ -19,8 +19,8 @@
         <some.web-common.version>1.0</some.web-common.version>
         <some.rpc-interface.version>1.0</some.rpc-interface.version>
 
-        <spring.boot.version>2.0.1.RELEASE</spring.boot.version>
-        <spring.cloud.version>2.0.1.RELEASE</spring.cloud.version>
+        <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
+        <spring.cloud.version>2.0.4.RELEASE</spring.cloud.version>
         <spring.zuul.version>1.4.5.RELEASE</spring.zuul.version>
         <swagger.version>2.7.0</swagger.version>
         <dubbo.version>2.7.3</dubbo.version>
@@ -265,6 +265,16 @@
                 <groupId>org.springframework.session</groupId>
                 <artifactId>spring-session-data-redis</artifactId>
                 <version>1.3.1.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring.boot.version}</version>
             </dependency>
             <!-- mybatis-plus begin -->
             <dependency>

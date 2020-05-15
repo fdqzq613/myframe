@@ -16,9 +16,11 @@ import reactor.core.publisher.Mono;
 @Component
 public class MyLoadBalancerClientFilter extends LoadBalancerClientFilter {
     public static ThreadLocal<ServerWebExchange> serverWebExchangeHolder = new ThreadLocal<>();
+
     public MyLoadBalancerClientFilter(LoadBalancerClient loadBalancer) {
         super(loadBalancer);
     }
+
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

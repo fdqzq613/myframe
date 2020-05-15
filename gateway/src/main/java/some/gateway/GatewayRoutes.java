@@ -3,12 +3,15 @@ package some.gateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.RewritePathGatewayFilterFactory;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.gateway.route.builder.UriSpec;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import reactor.core.publisher.Mono;
 import some.gateway.common.DevRoutePredicateFactory;
 import some.gateway.common.TokenGatewayFilter;
 import some.gateway.common.UrlGatewayFilterFactory;
@@ -72,6 +75,12 @@ public class GatewayRoutes {
 	@Bean
 	public DevRoutePredicateFactory initMyRoutePredicateFactory(){
 		return new DevRoutePredicateFactory(DevRoutePredicateFactory.Config.class);
+	}
+
+	//限流
+	@Bean
+	public KeyResolver ipKeyResolver() {
+		return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
 	}
 
 }
