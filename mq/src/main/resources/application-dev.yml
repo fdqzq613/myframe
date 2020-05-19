@@ -1,0 +1,42 @@
+server:
+  port: 8681
+
+spring:
+  application:
+    name: cloud-mq
+  cloud:
+    stream:
+      rabbit:
+        bindings:
+          some-input:
+            consumer:
+              acknowledge-mode: manual #要在这配置
+      defaultBinder: local_rabbit
+      bindings:
+        some-input:  #通道的名称
+          destination: some.mq #Exchange 名称 要和output的destination一致, 这样才能将队列和写入消息的exchange关联起来
+          binder: local_rabbit #对应virtual-host
+          group: logMessageConsumers #创建组里确保只有一个消费者只消费一次 # 拥有 group 默认会持久化队列
+          consumer:
+            exchangeType: topic  #默认是topic
+            #bindingRoutingKey: #
+            bindingRoutingKey: some-key.* # 设置一个RoutingKey信息
+            #autoCommitOffset: false #默认自动提交 false手动提交
+            #acknowledge-mode: manual #这里配置不起作用
+        some-output: #通道的名称
+          destination: some.mq
+          binder: local_rabbit
+          producer:
+            exchangeType: topic
+            routingKeyExpression: headers.name # 一个动态的基于name做路由
+      binders:
+        local_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: 127.0.0.1
+                port: 5672
+                username: guest
+                password: guest
+                virtual-host: /

@@ -20,7 +20,7 @@
         <some.rpc-interface.version>1.0</some.rpc-interface.version>
 
         <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
-        <spring.cloud.version>2.0.4.RELEASE</spring.cloud.version>
+        <spring.cloud.version>2.0.3.RELEASE</spring.cloud.version>
         <spring.zuul.version>1.4.5.RELEASE</spring.zuul.version>
         <swagger.version>2.7.0</swagger.version>
         <dubbo.version>2.7.3</dubbo.version>
@@ -87,7 +87,12 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-ribbon</artifactId>
+                <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
                 <version>${spring.cloud.version}</version>
             </dependency>
             <dependency>
@@ -275,6 +280,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>3.3.0</version>
             </dependency>
             <!-- mybatis-plus begin -->
             <dependency>
@@ -492,5 +502,7 @@
         <module>rpc-interface</module>
         <module>example</module>
         <module>eureka-gray-client</module>
+        <module>web</module>
+        <module>mq</module>
     </modules>
 </project>
