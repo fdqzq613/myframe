@@ -24,4 +24,12 @@ public class SendService {
 				.build();
 		streamOutputChannel.send().send(message );
 	}
+
+	public void send2(String msg){
+		Message<String> message = MessageBuilder
+				//header 作为routingKey
+				.withPayload(msg).setHeader("name","some2-key")
+				.build();
+		streamOutputChannel.send().send(message );
+	}
 }

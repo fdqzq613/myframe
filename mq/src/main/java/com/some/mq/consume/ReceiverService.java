@@ -21,7 +21,19 @@ public class ReceiverService {
 	@StreamListener(StreamInputChannel.INPUT)
 	public void onReceiver(String msg,@Header(AmqpHeaders.CHANNEL) Channel channel,
 						   @Header(AmqpHeaders.DELIVERY_TAG) Long deliveryTag){
-		log.info("接收到消息:{}",msg);
+		log.info("1接收到消息:{}",msg);
+		//
+		try {
+			channel.basicAck(deliveryTag, false);//手动确认
+		} catch (IOException e) {
+			log.error("手动确认失败",e);
+		}
+	}
+
+	@StreamListener(StreamInputChannel.INPUT2)
+	public void onReceiver2(String msg,@Header(AmqpHeaders.CHANNEL) Channel channel,
+						   @Header(AmqpHeaders.DELIVERY_TAG) Long deliveryTag){
+		log.info("2接收到消息:{}",msg);
 		//
 		try {
 			channel.basicAck(deliveryTag, false);//手动确认
