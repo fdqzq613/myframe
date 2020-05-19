@@ -13,7 +13,7 @@ spring:
               acknowledge-mode: manual #要在这配置
               exchangeType: topic  #默认是topic
               #bindingRoutingKey: #
-              bindingRoutingKey: some-key # 设置一个RoutingKey信息 注意一旦创建了就生效了  后续修改失效
+              bindingRoutingKey: some-key # 设置一个RoutingKey信息 注意一旦创建了就生效了  后续修改会再产生一个，导致多个
           some-input2:
             consumer:
               acknowledge-mode: manual #要在这配置
