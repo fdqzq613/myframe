@@ -31,6 +31,8 @@ public class RedisTest {
 
     @Test
     public void test() {
+        Object v = redisTemplate.opsForValue().getAndSet("mysome12","22");
+        Object v1 = redisTemplate.opsForValue().getAndSet("mysome12","99");
         someCache.someById("555566666699");
         String key = "some.redis";
         String value = "go";

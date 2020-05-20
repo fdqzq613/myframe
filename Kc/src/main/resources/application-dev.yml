@@ -1,0 +1,90 @@
+server:
+  port: 8786
+
+spring:
+  application:
+    name: cloud-kc
+  #redis集群
+  redis:
+    host: 192.168.20.138
+    password: 123456
+    port: 6379
+    database: 0
+    timeout: 60s  # 数据库连接超时时间，2.0 中该参数的类型为Duration，这里在配置的时候需要指明单位
+    # 连接池配置，2.0中直接使用jedis或者lettuce配置连接池
+    jedis:
+      pool:
+        # 最大空闲连接数
+        max-idle: 500
+        # 最小空闲连接数
+        min-idle: 50
+        # 等待可用连接的最大时间，负数为不限制
+        max-wait:  5s
+        # 最大活跃连接数，负数为不限制
+        max-active: 1000
+
+
+####MQ
+  cloud:
+    stream:
+      rabbit:
+        bindings:
+          kc-input:
+            consumer:
+              acknowledge-mode: manual #要在这配置
+              exchangeType: topic  #默认是topic
+              #bindingRoutingKey: #
+              bindingRoutingKey: kc-key # 设置一个RoutingKey信息 注意一旦创建了就生效了  后续修改会再产生一个，导致多个
+          kc-finish-output:
+            producer:
+              exchangeType: topic
+              #routingKeyExpression: '''some2-key'''
+              routingKeyExpression: headers['name'] # 一个动态的基于name做路由
+      defaultBinder: local_rabbit
+      bindings:
+        kc-input:  #通道的名称
+          destination: some.mq #Exchange 名称 要和output的destination一致, 这样才能将队列和写入消息的exchange关联起来
+          binder: local_rabbit #对应virtual-host
+          group: logMessageConsumers5 #创建组里确保只有一个消费者只消费一次 # 拥有 group 默认会持久化队列
+        kc-finish-output: #通道的名称
+          destination: some.mq
+          binder: local_rabbit
+            #producer:
+            # exchangeType: topic
+          #routingKeyExpression: headers.name # 一个动态的基于name做路由
+      binders:
+        local_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: 127.0.0.1
+                port: 5672
+                username: guest
+                password: guest
+                virtual-host: /
+
+
+#熔断
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            #目前有两个容器实例，单个请求超时5s,+重试>10s，超15s则熔断
+            timeoutInMilliseconds: 15000
+        timeout:
+          enabled: true
+
+#Eureka 相关配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8085/eureka/
+  # 是否从其他的服务中心同步服务列表
+      fetch-registry: true
+  # 是否把自己作为服务注册到其他服务注册中心
+      register-with-eureka: false
+
+

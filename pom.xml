@@ -504,5 +504,7 @@
         <module>eureka-gray-client</module>
         <module>web</module>
         <module>mq</module>
+        <module>order</module>
+        <module>Kc</module>
     </modules>
 </project>

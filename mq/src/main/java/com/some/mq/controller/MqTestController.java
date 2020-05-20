@@ -3,6 +3,7 @@ package com.some.mq.controller;
 import com.some.mq.producer.SendService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "mqtest相关操作", tags = "mqtest相关操作")
 @RestController
 @RequestMapping("/mq")
+@Slf4j
 public class MqTestController {
     @Autowired
     private SendService sendService;
@@ -36,6 +38,8 @@ public class MqTestController {
 		//第一个参数是交换机，第二个参数是routingKey,第三个参数是要发送的消息,支持实体对象
 		amqpt.convertAndSend("some.mq","some2-key", msg);
 	}
+
+
 
 
 }
