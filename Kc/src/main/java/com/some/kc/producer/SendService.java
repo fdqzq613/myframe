@@ -23,10 +23,10 @@ public class SendService {
 	 * 预扣库存成功
 	 * @param kcFinishVo
 	 */
-	public void sendPre(KcFinishVo kcFinishVo){
+	public void sendPreLock(KcFinishVo kcFinishVo){
 		Message<KcFinishVo> message = MessageBuilder
 				//header 作为routingKey
-				.withPayload(kcFinishVo).setHeader("name","kc-finish-key")
+				.withPayload(kcFinishVo).setHeader("name","kc-lock-finish-key")
 				.build();
 		kcFinishOutputChannel.send().send(message );
 	}

@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class KcOrderVo {
-    private String orderNo;
-    private String goodsNo;
+    private long orderNo;
+    private long goodsNo;
     private int num;
 }

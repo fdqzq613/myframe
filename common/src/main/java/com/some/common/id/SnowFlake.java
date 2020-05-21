@@ -97,7 +97,8 @@ public class SnowFlake {
         long start = System.currentTimeMillis();
         System.out.println(start);
         for (int i = 0; i < 100; i++) {
-            System.out.println(snowFlake.nextId());
+            long id = snowFlake.nextId();
+            System.out.printf("no:%s,长度:%s \n",id,String.valueOf(id).length());
         }
 
 

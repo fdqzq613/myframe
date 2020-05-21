@@ -10,7 +10,7 @@ import org.springframework.messaging.SubscribableChannel;
  * @date   2020年4月13日
  */
 public interface KcInputChannel {
-	public static final String INPUT = "kc-input";
+	public static final String INPUT = "kc-lock-input";
 	@Input(INPUT)
 	SubscribableChannel input();
 }

@@ -14,4 +14,5 @@ public class KcFinishVo {
     private String orderNo;
     private String goodsNo;
     private int num;
+    private String msg;
 }

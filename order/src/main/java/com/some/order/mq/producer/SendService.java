@@ -21,9 +21,10 @@ public class SendService {
 	public void send(KcOrderVo kcOrderVo){
 		Message<KcOrderVo> message = MessageBuilder
 				//header 作为routingKey
-				.withPayload(kcOrderVo).setHeader("name","kc-key")
+				.withPayload(kcOrderVo).setHeader("name","kc-lock-key")
 				.build();
-		kcOutputChannel.send().send(message );
+		boolean hadSend = kcOutputChannel.send().send(message );
+		log.info("hadSend:{}",hadSend);
 	}
 
 }

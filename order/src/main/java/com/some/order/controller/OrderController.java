@@ -2,6 +2,7 @@ package com.some.order.controller;
 
 import com.some.common.result.RespResult;
 import com.some.common.utils.IdUtils;
+import com.some.order.mq.vo.KcOrderVo;
 import com.some.order.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,26 +34,43 @@ public class OrderController {
 
     /**
      * 下单
-     * @param orderNo
+     * @param kcOrderVo
      * @return
      */
     @ApiOperation(value = "下单", notes = "下单", httpMethod = "POST")
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public RespResult<String> order(Long orderNo){
+    public RespResult<String> order(KcOrderVo kcOrderVo){
 
-        log.info("前台用户：开始下单，NO：{}",orderNo);
+        log.info("前台用户：开始下单，NO：{}",kcOrderVo);
         //发送
-        return orderService.preOrder(orderNo);
+        return orderService.preOrder(kcOrderVo);
     }
+
+    @ApiOperation(value = "test下单", notes = "test下单", httpMethod = "POST")
+    @RequestMapping(value = "/testOrder", method = {RequestMethod.POST,RequestMethod.GET})
+    public RespResult<String> testOrder(){
+
+        long orderNo = orderService.getOrderNo();
+        log.info("获取订单号:{}",orderNo);
+        KcOrderVo kcOrderVo = new KcOrderVo();
+        kcOrderVo.setNum(2);
+        kcOrderVo.setOrderNo(orderNo);
+        kcOrderVo.setGoodsNo(1);
+        log.info("前台用户：开始下单，NO：{}",kcOrderVo);
+        RespResult rs = orderService.preOrder(kcOrderVo);
+        log.info(rs.toString());
+        return rs;
+    }
+
 
     /**
      * 支付
      * @param orderNo
      * @return
      */
-    @ApiOperation(value = "支付", notes = "支付", httpMethod = "POST")
-    @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public RespResult<String> pay(String orderNo){
+    @ApiOperation(value = "支付成功回调", notes = "支付成功回调", httpMethod = "POST")
+    @RequestMapping(value = "/payCallback", method = RequestMethod.POST)
+    public RespResult<String> payCallback(String orderNo){
 
         return RespResult.create("success");
     }

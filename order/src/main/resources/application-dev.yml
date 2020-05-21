@@ -35,20 +35,20 @@ spring:
               acknowledge-mode: manual #要在这配置
               exchangeType: topic  #默认是topic
               #bindingRoutingKey: #
-              bindingRoutingKey: kc-finish-key # 设置一个RoutingKey信息 注意一旦创建了就生效了  后续修改会再产生一个，导致多个
+              bindingRoutingKey: kc-lock-finish-key # 设置一个RoutingKey信息 注意一旦创建了就生效了  后续修改会再产生一个，导致多个
           kc-output:
             producer:
               exchangeType: topic
-              #routingKeyExpression: '''some2-key'''
-              routingKeyExpression: headers['name'] # 一个动态的基于name做路由
+              routingKeyExpression: '''kc-lock-key'''
+              #routingKeyExpression: headers['name'] # 一个动态的基于name做路由
       defaultBinder: local_rabbit
       bindings:
         kc-finish-input:  #通道的名称
-          destination: some.mq #Exchange 名称 要和output的destination一致, 这样才能将队列和写入消息的exchange关联起来
+          destination: some.kc.finish #Exchange 名称 要和output的destination一致, 这样才能将队列和写入消息的exchange关联起来
           binder: local_rabbit #对应virtual-host
-          group: logMessageConsumers5 #创建组里确保只有一个消费者只消费一次 # 拥有 group 默认会持久化队列
+          group: kc-finish-Consumers #创建组里确保只有一个消费者只消费一次 # 拥有 group 默认会持久化队列
         kc-output: #通道的名称
-          destination: some.mq
+          destination: some.kc.pre
           binder: local_rabbit
             #producer:
           # exchangeType: topic

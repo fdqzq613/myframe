@@ -22,19 +22,17 @@ spring:
         max-wait:  5s
         # 最大活跃连接数，负数为不限制
         max-active: 1000
-
-
-####MQ
+  ####MQ
   cloud:
     stream:
       rabbit:
         bindings:
-          kc-input:
+          kc-lock-input:
             consumer:
               acknowledge-mode: manual #要在这配置
               exchangeType: topic  #默认是topic
               #bindingRoutingKey: #
-              bindingRoutingKey: kc-key # 设置一个RoutingKey信息 注意一旦创建了就生效了  后续修改会再产生一个，导致多个
+              bindingRoutingKey: kc-lock-key # 设置一个RoutingKey信息 注意一旦创建了就生效了  后续修改会再产生一个，导致多个
           kc-finish-output:
             producer:
               exchangeType: topic
@@ -42,15 +40,15 @@ spring:
               routingKeyExpression: headers['name'] # 一个动态的基于name做路由
       defaultBinder: local_rabbit
       bindings:
-        kc-input:  #通道的名称
-          destination: some.mq #Exchange 名称 要和output的destination一致, 这样才能将队列和写入消息的exchange关联起来
+        kc-lock-input:  #通道的名称
+          destination: some.kc.pre #Exchange 名称 要和output的destination一致, 这样才能将队列和写入消息的exchange关联起来
           binder: local_rabbit #对应virtual-host
-          group: logMessageConsumers5 #创建组里确保只有一个消费者只消费一次 # 拥有 group 默认会持久化队列
+          group: kc-pre-Consumers #创建组里确保只有一个消费者只消费一次 # 拥有 group 默认会持久化队列
         kc-finish-output: #通道的名称
-          destination: some.mq
+          destination: some.kc.finish
           binder: local_rabbit
-            #producer:
-            # exchangeType: topic
+          #producer:
+          # exchangeType: topic
           #routingKeyExpression: headers.name # 一个动态的基于name做路由
       binders:
         local_rabbit:
@@ -63,6 +61,58 @@ spring:
                 username: guest
                 password: guest
                 virtual-host: /
+
+
+##资源库数据库
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3396/demo?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&useSSL=false
+    username: root
+    password: 123456
+    initialize: false
+    sqlScriptEncoding: UTF-8
+    initialSize: 5
+    minIdle: 5
+    maxActive: 10
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 600000
+    minEvictableIdleTimeMillis: 3000000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true  #在检查闲置连接时同时检查连接可用性
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall,logback
+    
+##mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath:/**/*Mapper.xml
+  type-aliases-package: com.some.kc.domain
+  # 数据库相关配置
+  global-config:
+    #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+    id-type: ID_WORKER
+    #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+    field-strategy: not_empty
+    #驼峰下划线转换
+    column-underline: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #逻辑删除配置
+    logic-delete-value: 0
+    logic-not-delete-value: 1
+    db-type: mysql
+  
+  #刷新mapper 调试神器
+  refresh: true
+  # 原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    # 配置slq打印日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
 #熔断
