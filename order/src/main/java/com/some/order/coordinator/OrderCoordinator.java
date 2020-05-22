@@ -54,6 +54,7 @@ public class OrderCoordinator {
         log.info("开启订单事务");
     }
     public void cancel(String notCancelNo){
+        log.info("订单失败回滚:{}",this.getKcOrderVo().getOrderNo());
         for(ITccCancel iTccCancel:cancelMap.values()){
               if(iTccCancel.getNo().equals(notCancelNo)){
                   continue;

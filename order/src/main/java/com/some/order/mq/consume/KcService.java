@@ -34,6 +34,10 @@ public class KcService {
 				log.warn("事务协调者不存在:{}",kcFinishVo.getOrderNo());
 				return;
 			}
+			if(kcFinishVo.getCode()!=200){
+				orderCoordinator.cancel("kc");
+				return;
+			}
 			orderCoordinator.comfirm("kc");
 			log.info("订单完成:{}",kcFinishVo);
 		} catch (Exception e) {
