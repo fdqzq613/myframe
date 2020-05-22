@@ -8,16 +8,14 @@ import com.some.order.handler.KcHandler;
 import com.some.order.handler.OrderHandler;
 import com.some.order.mq.vo.KcOrderVo;
 import com.some.web.utils.ApplicationContextUtils;
+import lombok.Data;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @description: 订单事务协调者-tcc
@@ -27,45 +25,55 @@ import java.util.Map;
  */
 @Slf4j
 public class OrderCoordinator {
-    private  Map<String,ITccTry> tryMap = new HashMap<>();
-    private  Map<String,ITccComfirm> comfirmMap = new HashMap<>();
-    private  List<IHandler> handlers = new ArrayList<>();
-
-    private  Map<String,ITccCancel> cancelMap = new HashMap<>();
+    //剩余未完成任务
+    private  Map<String,TccWorker> works = new ConcurrentHashMap<>();
+    @Getter
+    private long startTime;
     private Object lock = new Object();
     @Getter
     private KcOrderVo kcOrderVo;
     private int transactionNum;
+    //执行次数
+    @Getter
+    private int execTimes;
     @PostConstruct
     public void init(){
 
         log.info("create");
     }
     public void orderTry(KcOrderVo kcOrderVo){
+        TccWorker orderWorker = new TccWorker("order",null,new OrderComfirm(),new OrderCancel(),ApplicationContextUtils.getBean(OrderHandler.class));
+        TccWorker kcWorker = new TccWorker("kc",null,new KcComfirm(),new KcCancel(),ApplicationContextUtils.getBean(KcHandler.class));
+        works.put(orderWorker.getName(),orderWorker);
+        works.put(kcWorker.getName(),kcWorker);
         this.kcOrderVo = kcOrderVo;
-        handlers.add(ApplicationContextUtils.getBean(KcHandler.class));
-        handlers.add(ApplicationContextUtils.getBean(OrderHandler.class));
-        comfirmMap.put("order",new OrderComfirm());
-        comfirmMap.put("kc",new KcComfirm());
-        cancelMap.put("order",new OrderCancel());
-        cancelMap.put("kc",new KcCancel());
+        startTime = System.currentTimeMillis();
         //启动事务，需要完成事务数
-        transactionNum = comfirmMap.size();
+        transactionNum = works.size();
         log.info("开启订单事务");
     }
     public void cancel(String notCancelNo){
         log.info("订单失败回滚:{}",this.getKcOrderVo().getOrderNo());
-        for(ITccCancel iTccCancel:cancelMap.values()){
-              if(iTccCancel.getNo().equals(notCancelNo)){
+        for(TccWorker tccWorker:works.values()){
+              if(tccWorker.getTccCancel().getNo().equals(notCancelNo)){
                   continue;
               }
-            iTccCancel.cancel(this.getKcOrderVo());
+            tccWorker.getTccCancel().cancel(this.getKcOrderVo());
         }
     }
 
+    public boolean tryNext(){
+        if(this.execTimes>3){
+            //TODO 超过次数
+            return false;
+        }
+        doHandle(this.getKcOrderVo());
+        return true;
+    }
     public void doHandle(KcOrderVo kcOrderVo){
-        handlers.forEach(handler->{
-            handler.doHandle(kcOrderVo,this);
+        execTimes++;
+        works.values().forEach(tccWorker->{
+            tccWorker.getHandler().doHandle(kcOrderVo,this);
         });
     }
     public  void checkFinish(){
@@ -78,21 +86,39 @@ public class OrderCoordinator {
         }
     }
     public synchronized void comfirm(String no){
-        ITccComfirm iTccComfirm = comfirmMap.get(no);
-        if(iTccComfirm==null){
+        TccWorker tccWorker = works.get(no);
+        if(tccWorker==null){
             log.warn("已经确认完:{}",no);
             return;
         }
-        iTccComfirm.comfirm();
+        tccWorker.getTccComfirm().comfirm();
         transactionNum--;
-        comfirmMap.remove(no);
+        works.remove(no);
         if(transactionNum==0){
             //全部都确认了  提交
             log.info("全部确认完成,订单事务完成");
             synchronized (lock){
                 log.info("通知订单完成");
                 lock.notifyAll();
+                OrderCoordinatorHolder.remove(this.getKcOrderVo().getOrderNo());
             }
+        }
+    }
+    @Data
+    class TccWorker{
+
+        private  ITccTry tccTry;
+        private  ITccComfirm tccComfirm;
+        private  IHandler handler;
+
+        private  ITccCancel tccCancel;
+        private String name;
+        public TccWorker(String name,ITccTry tccTry,ITccComfirm tccComfirm,ITccCancel tccCancel,IHandler handler){
+            this.name=name;
+            this.tccTry = tccTry;
+            this.tccComfirm = tccComfirm;
+            this.tccCancel = tccCancel;
+            this.handler = handler;
         }
     }
 }
