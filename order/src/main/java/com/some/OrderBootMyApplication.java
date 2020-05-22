@@ -1,4 +1,4 @@
-package com.some.order;
+package com.some;
 
 import com.some.order.mq.consume.KcFinishInputChannel;
 import com.some.order.mq.producer.KcOutputChannel;

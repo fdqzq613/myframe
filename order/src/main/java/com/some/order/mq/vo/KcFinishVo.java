@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 public class KcFinishVo {
     private int code;
-    private String orderNo;
-    private String goodsNo;
+    private long orderNo;
+    private long goodsNo;
     private int num;
     private String msg;
 }

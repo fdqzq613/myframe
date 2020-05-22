@@ -70,8 +70,9 @@ public class OrderController {
      */
     @ApiOperation(value = "支付成功回调", notes = "支付成功回调", httpMethod = "POST")
     @RequestMapping(value = "/payCallback", method = RequestMethod.POST)
-    public RespResult<String> payCallback(String orderNo){
-
-        return RespResult.create("success");
+    public RespResult<String> payCallback(long orderNo){
+        RespResult rs = orderService.payCallback(orderNo);
+        log.info(rs.toString());
+        return rs;
     }
 }

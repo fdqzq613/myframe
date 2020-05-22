@@ -5,6 +5,10 @@ import com.some.common.utils.IdUtils;
 import com.some.order.cache.KcCache;
 import com.some.order.cache.OrderNoCache;
 import com.some.order.constants.IOrderStatus;
+import com.some.order.coordinator.OrderCoordinator;
+import com.some.order.coordinator.OrderCoordinatorHolder;
+import com.some.order.domain.Order;
+import com.some.order.mapper.OrderMapper;
 import com.some.order.mq.producer.SendService;
 import com.some.order.mq.vo.KcOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +26,21 @@ public class OrderService {
     private KcCache kcCache;
     @Autowired
     private OrderNoCache orderNoCache;
-    @Autowired
-    private SendService sendService;
+
+
 
     public long getOrderNo(){
         long orderNo =  IdUtils.getId();
         orderNoCache.setStatus(orderNo, IOrderStatus.orderEnum.ORDER_ONLY_CREATE_NO.getCode());
         return orderNo;
+    }
+
+    /**
+     * 支付成功回调处理；1库存最终扣除;2设置订单完成状态
+     * @return
+     */
+    public RespResult<String>  payCallback(long orderNo){
+        return RespResult.create();
     }
     /**
      * 下单-预扣库存
@@ -46,10 +58,22 @@ public class OrderService {
         if(num==null||num<=0){
             return RespResult.create(909,"该商品已经没有库存");
         }
-        //发送库存预扣消息处理
-        sendService.send(kcOrderVo);
+
+        //启动事务
+        OrderCoordinator orderCoordinator = new OrderCoordinator();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OrderCoordinatorHolder.put(kcOrderVo.getOrderNo(),orderCoordinator);
+                orderCoordinator.orderTry(kcOrderVo);
+                orderCoordinator.doHandle(kcOrderVo);
+            }
+        }).start();
+        orderCoordinator.checkFinish();
         return RespResult.create("预扣消息已经发送");
     }
+
+
 
     public RespResult<String> pay(String orderNo){
 
