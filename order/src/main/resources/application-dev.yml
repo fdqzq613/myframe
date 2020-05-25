@@ -38,9 +38,18 @@ spring:
               bindingRoutingKey: kc-lock-finish-key # 设置一个RoutingKey信息 注意一旦创建了就生效了  后续修改会再产生一个，导致多个
           kc-output:
             producer:
+              ttl: 3000 #消息3秒不消费转入私信队列
+              autoBindDlq: true #启动私信队列
+              deadLetterExchange: delay.order.input #绑定exchange
+              deadLetterQueueName: delay.order.input.delay-order #死信队列名字：exchanName.queueName
               exchangeType: topic
               routingKeyExpression: '''kc-lock-key'''
               #routingKeyExpression: headers['name'] # 一个动态的基于name做路由
+          delay-order-input:
+            consumer:
+              acknowledge-mode: manual #要在这配置
+              exchangeType: topic  #默认是topic
+              bindingRoutingKey: some.#
       defaultBinder: local_rabbit
       bindings:
         kc-finish-input:  #通道的名称
@@ -50,6 +59,14 @@ spring:
         kc-output: #通道的名称
           destination: some.kc.pre
           binder: local_rabbit
+          group: kc-pre-Consumers
+          producer:
+            requiredGroups: kc-pre-Consumers
+        delay-order-input:
+          destination: delay.order.input
+          binder: local_rabbit
+          group: delay-order
+
             #producer:
           # exchangeType: topic
           #routingKeyExpression: headers.name # 一个动态的基于name做路由

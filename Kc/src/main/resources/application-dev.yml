@@ -29,6 +29,10 @@ spring:
         bindings:
           kc-lock-input:
             consumer:
+              ttl: 3000 #消息3秒不消费转入私信队列
+              autoBindDlq: true #启动私信队列
+              deadLetterExchange: delay.order.input #绑定exchange
+              deadLetterQueueName: delay.order.input.delay-order #死信队列名字：exchanName.queueName
               acknowledge-mode: manual #要在这配置
               exchangeType: topic  #默认是topic
               #bindingRoutingKey: #

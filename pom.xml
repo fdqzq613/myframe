@@ -506,5 +506,6 @@
         <module>mq</module>
         <module>order</module>
         <module>Kc</module>
+        <module>docker-some</module>
     </modules>
 </project>
