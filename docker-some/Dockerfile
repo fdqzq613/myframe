@@ -6,5 +6,3 @@ ARG JAR_FILE
 COPY ${JAR_FILE} /opt/app.jar
 # 启动容器时执行
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/opt/app.jar"]
-# 使用端口80
-EXPOSE 80

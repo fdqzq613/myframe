@@ -99,8 +99,10 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>1.4.10</version>
                 <configuration>
-                    <username>fdqzq@sina.com</username>
-                    <password>vj19841111</password>
+                    <!--
+                    <username></username>
+                    <password></password>
+                    -->
                     <repository>registry.cn-hangzhou.aliyuncs.com/mydocker_some/mydocker_1</repository>
                     <contextDirectory>./</contextDirectory>
                     <tag>${project.version}</tag>
