@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="GBK" ?>
+
+<configuration>
+	<property name="project_name" value="sleuth-zipkin" />
+	<property name="LOG_HOME" value="/logs" />
+  
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 日志文件命名策略 -->
+			<FileNamePattern>${LOG_HOME}/${project_name}_%d{yyyy-MM-dd}.log</FileNamePattern>
+    		
+			<!-- 只保留30天的日志记录 -->
+			<MaxHistory>30</MaxHistory>
+    		
+		</rollingPolicy>
+    	
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} |-%level in %class{30}::%method:%L - %msg %n</pattern>
+		</encoder>
+    	
+	</appender>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<encoder>
+			<!-- <pattern>%d{yyyy-MM-dd HH:mm:ss} |-%level-[%thread]-[%L: %class{30}.[%method] ] %msg %n</pattern> -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} |-%level in %class{30}::%method:%L - %msg %n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+	
+	<logger name="druid.sql" level="INFO">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	 <logger name="jdbc.sqlonly" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="jdbc.audit" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="jdbc.resultset" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="jdbc.connection" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    
+      <logger name="jdbc.sqltiming" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE" />
+    </logger>
+<!--调高nacos日志级别，防止日志过多-->
+	<logger name="com.alibaba.nacos.client.naming" additivity="false">
+		<level value="warn"/>
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="FILE" />
+	</logger>
+</configuration>
+
