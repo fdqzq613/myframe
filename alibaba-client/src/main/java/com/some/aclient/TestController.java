@@ -1,5 +1,6 @@
 package com.some.aclient;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,7 @@ public class TestController {
 
 //http://localhost:8868/test/getNacos
     @RequestMapping("/getNacos")
+    @SentinelResource(value="getNacos")
     public String getNacos() {
         log.info("获取服务配置");
         return testService.getNacos();

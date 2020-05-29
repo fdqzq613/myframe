@@ -1,13 +1,12 @@
 spring:
   application:
-    name: sleuth-zipkin
+    name: cloud-alibaba-client
   cloud:
     nacos:
       discovery:
         server-addr: 192.168.20.101:8848
       config:
         server-addr: 192.168.20.101:8848
-
     sentinel:
       transport:
         # 指定sentinel控制台地址
@@ -16,11 +15,19 @@ spring:
         #client-ip: 127.0.0.1
         # 指定和控制台通信的端口哦，默认值8719
         # 若不配置，会自动扫猫从8719开始扫猫，依次+1，知道值找到未被占用的端口
-        port: 8759
+        port: 8769
         # 心跳发送周期，默认值null
         # 但在SimpleHttpHeartbeatSender会用默认值10秒
         heartbeat-interval-ms: 10000
-
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
+  zipkin:
+    base-url: http://192.168.20.101:9411/
+    discoveryClientEnabled: false
 
 feign:
   sentinel:
