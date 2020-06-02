@@ -69,6 +69,12 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- shardingsphere-->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-core</artifactId>
+                <version>4.1.0</version>
+            </dependency>
 
             <!--alibaba -->
             <dependency>
@@ -553,5 +559,6 @@
         <module>alibaba-service</module>
         <module>alibaba-client</module>
         <module>sleuth-zipkin</module>
+        <module>share-jdbc</module>
     </modules>
 </project>

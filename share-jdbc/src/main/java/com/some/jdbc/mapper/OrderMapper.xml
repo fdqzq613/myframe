@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.some.jdbc.mapper.OrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.some.jdbc.domain.Order">
+        <id column="id" property="id" />
+        <result column="order_no" property="orderNo" />
+        <result column="status" property="status" />
+        <result column="amount" property="amount" />
+        <result column="create_userid" property="createUserid" />
+        <result column="create_time" property="createTime" />
+        <result column="modify_userid" property="modifyUserid" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, order_no, status, amount, create_userid, create_time, modify_userid, modify_time
+    </sql>
+
+</mapper>

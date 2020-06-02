@@ -67,7 +67,7 @@ spring:
                 virtual-host: /
 
 
-##资源库数据库
+##数据库
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
