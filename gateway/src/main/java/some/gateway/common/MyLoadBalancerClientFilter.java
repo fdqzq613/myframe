@@ -1,6 +1,7 @@
 package some.gateway.common;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.gateway.config.LoadBalancerProperties;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.LoadBalancerClientFilter;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,8 @@ import reactor.core.publisher.Mono;
 public class MyLoadBalancerClientFilter extends LoadBalancerClientFilter {
     public static ThreadLocal<ServerWebExchange> serverWebExchangeHolder = new ThreadLocal<>();
 
-    public MyLoadBalancerClientFilter(LoadBalancerClient loadBalancer) {
-        super(loadBalancer);
+    public MyLoadBalancerClientFilter(LoadBalancerClient loadBalancer, LoadBalancerProperties properties) {
+        super(loadBalancer, properties);
     }
 
 

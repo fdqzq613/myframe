@@ -19,7 +19,6 @@ public class OrderService {
     public int save(Order order){
         long id = IdUtils.getId();
         //测试用 实际不会重复
-
         long orderNo =  Long.valueOf(r.nextInt(2));
         order.setId(id);
         order.setOrderNo(orderNo);
