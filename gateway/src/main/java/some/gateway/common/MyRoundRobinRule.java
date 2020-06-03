@@ -47,7 +47,8 @@ public class MyRoundRobinRule extends RoundRobinRule {
             Server devServer = null;
             for(int i=0;i<reachableServers.size();i++){
                 Server server = reachableServers.get(i);
-                if(server.isAlive()&&!server.getHost().contains(serverIp)){
+                if(server.isAlive()&&!server.getHost().contains(serverIp)&& server.isReadyToServe()){
+                    //TODO 缓存起来
                     devServer = server;
                     break;
                 }

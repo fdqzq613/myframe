@@ -1,0 +1,12 @@
+server:
+  port: 8585
+
+spring:
+  application:
+    name: cloud-order
+
+elasticsearch:
+  host: 47.114.163.240
+  port: 9200
+  schema: http
+

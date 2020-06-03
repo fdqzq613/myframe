@@ -25,6 +25,7 @@
         <dubbo.version>2.7.3</dubbo.version>
         <mybatis-plus-boot-starter.version>3.0.5</mybatis-plus-boot-starter.version>
 
+        <elasticsearch.version>7.7.0</elasticsearch.version>
     </properties>
 
     <repositories>
@@ -68,7 +69,27 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <!-- elasticsearch-->
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-elasticsearch</artifactId>
+                <version>4.0.0.RELEASE</version>
+            </dependency>
             <!-- shardingsphere-->
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
@@ -560,5 +581,6 @@
         <module>alibaba-client</module>
         <module>sleuth-zipkin</module>
         <module>share-jdbc</module>
+        <module>es</module>
     </modules>
 </project>
