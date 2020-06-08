@@ -13,6 +13,10 @@
     </properties>
     <artifactId>auth-client</artifactId>
     <dependencies>
+        <dependency>
+            <groupId>com.some</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
         <!-- spring boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -29,6 +29,7 @@ public class TestController {
         return "testNoPower";
     }
 
+    //http://localhost:7589/api/testPower
     @GetMapping("/testPower")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String testPower() {
