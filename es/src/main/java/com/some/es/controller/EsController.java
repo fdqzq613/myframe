@@ -68,9 +68,10 @@ public class EsController {
         return RespResult.create(esUtils.save(esVo.getIndex(),esVo.getIdKey(),esVo));
     }
 
-    @ApiOperation(value = "search", notes = "list", httpMethod = "GET")
+    @ApiOperation(value = "search", notes = "search", httpMethod = "GET")
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public RespResult<List<String>> search(String index,String content){
+        log.info("查询请求");
         String beginTime = "2000/01/01 00:00:00";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String endTime = sdf.format(new Date());

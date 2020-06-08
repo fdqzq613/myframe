@@ -20,7 +20,7 @@ public class ServiceController {
     private String serviceSome;
 
 
-//http://localhost:8858/config/getNacos
+//http://localhost:8858/service/getNacos
     @RequestMapping("/getNacos")
     public String getNacos() {
         return serviceSome;

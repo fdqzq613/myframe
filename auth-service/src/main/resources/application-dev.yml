@@ -1,0 +1,18 @@
+server:
+  port: 7585
+
+
+
+
+
+spring:
+  application:
+    name: cloud-auth-service
+
+
+logging:
+  level:
+    root: debug
+
+
+

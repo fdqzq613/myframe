@@ -1,0 +1,32 @@
+server:
+  port: 7589
+
+spring:
+  application:
+    name: cloud-auth-client
+
+
+security:
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      jwt:
+        key-uri: http://localhost:7585/oauth/token_key
+        key-value: 123
+      id: some_res
+      userInfoUri: http://localhost:7585/user/current
+    client:
+      clientId: client_2
+      clientSecret: 123456
+      userAuthorizationUri: http://localhost:7585/oauth/authorize
+      accessTokenUri: http://localhost:7585/oauth/token
+      grantType: authorization_code
+      scope: all
+
+logging:
+  level:
+    root: debug
+
+
+

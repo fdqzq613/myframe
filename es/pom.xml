@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <properties>
+        <elasticsearch.version>7.7.0</elasticsearch.version>
         <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
     </properties>
     <artifactId>es</artifactId>
