@@ -25,6 +25,7 @@ public class TestController {
     @SentinelResource(value="getNacos")
     public String getNacos() {
         log.info("SentinelResource获取服务配置");
+        testService.getNacos3();
         return testService.getNacos();
     }
 

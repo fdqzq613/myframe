@@ -7,4 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface TestService {
     @GetMapping("/test/getNacos")
     String getNacos();
+    @GetMapping("/test/getNacos3")
+    String getNacos3();
+
 }

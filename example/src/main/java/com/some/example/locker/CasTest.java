@@ -1,4 +1,4 @@
-package com.some.example.cas;
+package com.some.example.locker;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicStampedReference;
