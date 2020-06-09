@@ -1,4 +1,4 @@
-package com.some.example;
+package com.some.example.bitmap;
 
 /**
  * @description: bitmap
