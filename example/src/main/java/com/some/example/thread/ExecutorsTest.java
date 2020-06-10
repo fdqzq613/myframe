@@ -9,6 +9,7 @@ import java.util.concurrent.*;
  * @date: 2020-06-09 17:02
  */
 public class ExecutorsTest {
+   private ConcurrentHashMap concurrentHashMap;
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         Future<Object> future = executorService.submit(new Callable<Object>() {
