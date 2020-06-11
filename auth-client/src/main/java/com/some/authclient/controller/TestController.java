@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api")
 public class TestController {
 
-    @GetMapping("/login1")
-    public String login1() {
-        return "login";
-    }
+    //http://localhost:7589/api/testNoPower
     @GetMapping("/testNoPower")
     public String testNoPower() {
         return "testNoPower";
@@ -37,6 +34,19 @@ public class TestController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info("authentication: " + authentication.getAuthorities().toString());
         return "testPower";
+    }
+
+    /**
+     * 权限在资源服务器上定义
+     * @return
+     */
+    //http://localhost:7589/api/testResourcePower
+    @GetMapping("/testResourcePower")
+    public String testResourcePower() {
+        //for debug
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("authentication: " + authentication.getAuthorities().toString());
+        return "testResourcePower";
     }
 
 }

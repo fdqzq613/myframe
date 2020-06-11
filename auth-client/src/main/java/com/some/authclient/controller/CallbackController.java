@@ -15,9 +15,9 @@ import java.util.Map;
  */
 @RestController
 public class CallbackController {
-    @Value("${security.oauth2.client.clientId}")
+    @Value("${security.oauth2.client.client-id}")
     private String clientId;
-    @Value("${security.oauth2.client.clientSecret}")
+    @Value("${security.oauth2.client.client-secret}")
     private String clientSecret;
     //http://localhost:7585/oauth/authorize?client_id=client_2&redirect_uri=http://localhost:7589/callback&response_type=code&scope=all&state=zTf6yW
     @GetMapping("/callback")

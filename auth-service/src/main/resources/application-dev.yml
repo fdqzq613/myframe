@@ -1,11 +1,7 @@
 server:
   port: 7585
-  session:
-    cookie:
-      name: AUTH-SESSIONID
-
-
-
+  servlet:
+    context-path: /sso
 
 
 spring:

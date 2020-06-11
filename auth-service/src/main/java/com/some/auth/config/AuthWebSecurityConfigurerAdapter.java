@@ -31,26 +31,6 @@ public class AuthWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapt
     @Autowired
     private SsoUserDetailsService ssoUserDetailsService;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-//        http.formLogin()
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/oauth/**").permitAll()
-//                .antMatchers("/", "/index","/login","/error").permitAll()
-//                .anyRequest().authenticated()
-//        ;
-        http.csrf().disable()
-                .requestMatchers().antMatchers("/**")
-                .and()
-                .authorizeRequests()
-                .antMatchers("/login/**","/logout/**").permitAll()
-                .antMatchers("/**").authenticated()
-                .and()
-                .formLogin().permitAll();
-
-    }
-
     /**
      * password 支持多种编码，通过密码的前缀区分编码方式,推荐
      */
