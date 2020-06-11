@@ -82,6 +82,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return converter;
     }
 
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
 

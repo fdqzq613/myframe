@@ -1,32 +1,26 @@
 server:
   port: 7589
-
+  session:
+    cookie:
+      name: CLIENT-SESSIONID
 spring:
   application:
     name: cloud-auth-client
 
-
+auth-server: http://localhost:7585
 security:
-  basic:
-    enabled: false
   oauth2:
+    client:
+      client-id: client_2
+      client-secret: 123456
+      user-authorization-uri: ${auth-server}/oauth/authorize
+      access-token-uri: ${auth-server}/oauth/token
     resource:
       jwt:
-        key-uri: http://localhost:7585/oauth/token_key
-        key-value: 123
-      id: some_res
-      userInfoUri: http://localhost:7585/user/current
-    client:
-      clientId: client_2
-      clientSecret: 123456
-      userAuthorizationUri: http://localhost:7585/oauth/authorize
-      accessTokenUri: http://localhost:7585/oauth/token
-      grantType: authorization_code
+        key-uri: ${auth-server}/oauth/token_key
       scope: all
+
 
 logging:
   level:
     root: debug
-
-
-

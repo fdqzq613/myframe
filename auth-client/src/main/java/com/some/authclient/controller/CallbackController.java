@@ -1,6 +1,5 @@
 package com.some.authclient.controller;
 
-import com.some.common.utils.HttpClientUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,8 +30,8 @@ public class CallbackController {
         paramsMap.put("client_secret",clientSecret);
         //验证后 跳转地址 前台用
         paramsMap.put("redirect_uri","http://localhost:7589/api/testPower");
-
-        String rs = HttpClientUtils.httpPost(url,paramsMap);
+        String rs = null;
+        //String rs = HttpClientUtils.httpPost(url,paramsMap);
         return rs;
     }
 }

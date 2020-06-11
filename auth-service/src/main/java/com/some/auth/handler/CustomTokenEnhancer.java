@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 /**
  * 自定义accessToken添加额外信息
@@ -29,7 +28,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         additionalInformation.put("authorities", user.getAuthorities());
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInformation);
 
-        additionalInformation.put("organization", authentication.getName() + randomAlphabetic(4));
+        additionalInformation.put("organization", authentication.getName());
 
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInformation);
         return accessToken;

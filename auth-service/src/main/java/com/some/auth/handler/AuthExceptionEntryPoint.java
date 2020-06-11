@@ -34,7 +34,7 @@ public class AuthExceptionEntryPoint implements AuthenticationEntryPoint {
         map.put("message", authException.getMessage());
         map.put("data", "");
         map.put("path", request.getServletPath());
-        map.put("timestamp", String.valueOf(new Date().getTime()));
+        map.put("timestamp", String.valueOf(System.currentTimeMillis()));
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         try {

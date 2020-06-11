@@ -1,6 +1,5 @@
 package com.some.example.proxy;
 
-import SuperDog.Dog;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.core.DebuggingClassWriter;
 import net.sf.cglib.proxy.Enhancer;

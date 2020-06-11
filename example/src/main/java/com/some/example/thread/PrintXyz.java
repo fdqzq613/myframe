@@ -12,6 +12,7 @@ public class PrintXyz {
         Object lock2 = new Object();
         Object lock3 = new Object();
         new Thread(new Runnable(){
+            @Override
             public void run(){
                 for(int i=0;i<10;i++){
                     if(i>0){
@@ -38,6 +39,7 @@ public class PrintXyz {
             }
         }).start();
         new Thread(new Runnable(){
+            @Override
             public void run(){
                 for(int i=0;i<10;i++){
                     synchronized(lock2){
@@ -57,6 +59,7 @@ public class PrintXyz {
         }).start();
 
         new Thread(new Runnable(){
+            @Override
             public void  run(){
                 for(int i=0;i<10;i++){
                     synchronized(lock3){

@@ -30,8 +30,8 @@ public interface CommonRepository<T, ID extends Serializable> extends JpaReposit
      * @author qzq
      * @date 2017年4月25日 下午2:29:12
      */
+	@Override
 	Page<T> findAll(Pageable pageable);
-	
 	Page<T> findAll(Specification<T> specification, Pageable pageable);
 	/**
 	 * 获取默认分页

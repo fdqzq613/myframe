@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -61,8 +62,10 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 //                .antMatchers("/", "/index","/login").permitAll()
 //                .anyRequest().authenticated()
 //        ;
-        http
-                .requestMatchers().antMatchers("/**")
+        http.csrf().disable()
+                // 由于我们希望在用户界面中访问受保护的资源，因此我们需要允许创建会话
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .and().requestMatchers().antMatchers("/**")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login/**","/logout/**").permitAll()

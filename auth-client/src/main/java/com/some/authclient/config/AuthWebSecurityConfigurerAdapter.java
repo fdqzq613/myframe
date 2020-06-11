@@ -28,7 +28,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-//@EnableOAuth2Sso
+@EnableOAuth2Sso
 public class AuthWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
 

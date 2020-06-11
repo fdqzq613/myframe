@@ -45,6 +45,7 @@ public class MyBlockingQueue<T> {
         public static void main(String[] args){
             final  MyBlockingQueue<Integer> myQueue = new MyBlockingQueue();
             Thread producer = new Thread(new Runnable(){
+                @Override
                 public void run(){
                     try {
                         myQueue.put(1);
@@ -57,6 +58,7 @@ public class MyBlockingQueue<T> {
             producer.start();
 
             Thread concumer = new Thread(new Runnable(){
+                @Override
                 public void run(){
                     while(true){
                         //这里消费者获取生产者的值进行页面 处理
@@ -74,6 +76,7 @@ public class MyBlockingQueue<T> {
             concumer.start();
 
             Thread concumer2 = new Thread(new Runnable(){
+                @Override
                 public void run(){
                     while(true){
                         //这里消费者获取生产者的值进行页面 处理

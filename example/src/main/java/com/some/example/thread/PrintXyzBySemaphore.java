@@ -22,6 +22,7 @@ public class PrintXyzBySemaphore {
             e.printStackTrace();
         }
         new Thread(new Runnable(){
+            @Override
             public void run(){
                 for(int i=0;i<10;i++){
                     try {
@@ -36,6 +37,7 @@ public class PrintXyzBySemaphore {
             }
         }).start();
         new Thread(new Runnable(){
+            @Override
             public void run(){
                 for(int i=0;i<10;i++){
                     try {
@@ -50,6 +52,7 @@ public class PrintXyzBySemaphore {
             }
         }).start();
         new Thread(new Runnable(){
+            @Override
             public void run(){
                 for(int i=0;i<10;i++){
                     try {

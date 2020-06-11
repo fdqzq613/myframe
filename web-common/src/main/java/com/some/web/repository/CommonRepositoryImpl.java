@@ -36,6 +36,7 @@ implements CommonRepository<T, ID> {
 	 * @author qzq
 	 * @date 2019年1月21日 上午10:47:19
 	 */
+	@Override
 	public T findOne(ID id){
 		Optional<T> o =  findById(id);
 		return o.isPresent()?o.get():null;
@@ -50,7 +51,7 @@ implements CommonRepository<T, ID> {
 	public Page<T> findAll(CommonPageRequest pageRequest){
 		return findAll(pageRequest.getSpecification(), pageRequest);
 	}
-	
+	@Override
 	public Page<T> findAll(Pageable pageable) {
 
 		if (null == pageable) {
@@ -59,7 +60,7 @@ implements CommonRepository<T, ID> {
 
 		return findAll((Specification<T>) null, pageable);
 	}
-	
+	@Override
 	public Page<T> findAll(Specification<T> spec, Pageable pageable) {
 
 		TypedQuery<T> query = getQuery(spec, pageable);

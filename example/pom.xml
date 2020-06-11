@@ -11,7 +11,14 @@
 
     <artifactId>example</artifactId>
 <dependencies>
-
+    <dependency>
+        <groupId>com.some</groupId>
+        <artifactId>common</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+    </dependency>
     <dependency>
         <groupId>io.reactivex.rxjava2</groupId>
         <artifactId>rxjava</artifactId>

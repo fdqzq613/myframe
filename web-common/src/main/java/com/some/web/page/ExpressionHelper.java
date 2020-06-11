@@ -22,7 +22,9 @@ public class ExpressionHelper {
      * @return 
      */  
     public static CommonExpression eq(String fieldName, Object value) {  
-        if(StringUtils.isEmpty(value))return null;  
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
         return new CommonExpression (fieldName, value, IExpression.Operator.EQ);
     }  
       
@@ -33,7 +35,9 @@ public class ExpressionHelper {
      * @return 
      */  
     public static CommonExpression ne(String fieldName, Object value) {  
-        if(StringUtils.isEmpty(value))return null;  
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
         return new CommonExpression (fieldName, value, IExpression.Operator.NE);
     }  
   
@@ -44,7 +48,9 @@ public class ExpressionHelper {
      * @return 
      */  
     public static CommonExpression like(String fieldName, String value) {  
-        if(StringUtils.isEmpty(value))return null;  
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
         return new CommonExpression (fieldName, value, IExpression.Operator.LIKE);
     }  
   
@@ -57,7 +63,9 @@ public class ExpressionHelper {
      * @return 
      */  
     public static CommonExpression gt(String fieldName, Object value) {  
-        if(StringUtils.isEmpty(value))return null;  
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
         return new CommonExpression (fieldName, value, IExpression.Operator.GT);
     }  
   
@@ -68,7 +76,9 @@ public class ExpressionHelper {
      * @return 
      */  
     public static CommonExpression lt(String fieldName, Object value) {  
-        if(StringUtils.isEmpty(value))return null;  
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
         return new CommonExpression (fieldName, value, IExpression.Operator.LT);
     }  
   
@@ -79,7 +89,9 @@ public class ExpressionHelper {
      * @return 
      */  
     public static CommonExpression lte(String fieldName, Object value) {  
-        if(StringUtils.isEmpty(value))return null;  
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
         return new CommonExpression (fieldName, value, IExpression.Operator.LTE);
     }  
   
@@ -90,7 +102,9 @@ public class ExpressionHelper {
      * @return 
      */  
     public static CommonExpression gte(String fieldName, Object value) {  
-        if(StringUtils.isEmpty(value))return null;  
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
         return new CommonExpression (fieldName, value, IExpression.Operator.GTE);
     } 
     
@@ -101,7 +115,9 @@ public class ExpressionHelper {
      * @return 
      */  
     public static CommonExpression in(String fieldName, List value) {  
-        if(StringUtils.isEmpty(value))return null;  
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
         return new CommonExpression (fieldName, value, IExpression.Operator.IN);
     } 
     
@@ -112,7 +128,9 @@ public class ExpressionHelper {
      * @return 
      */  
     public static CommonExpression rightLike(String fieldName, List value) {  
-        if(StringUtils.isEmpty(value))return null;  
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
         return new CommonExpression (fieldName, value, IExpression.Operator.RIGHT_LIKE);
     } 
     
@@ -123,7 +141,9 @@ public class ExpressionHelper {
      * @return 
      */  
     public static CommonExpression between(String fieldName, Comparable[] value) {  
-        if(StringUtils.isEmpty(value))return null;  
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
         return new CommonExpression (fieldName, value, IExpression.Operator.BETWEEN);
     } 
     /**

@@ -24,15 +24,19 @@ public class ReentrantlockTest {
                 @Override
                 public void run() {
                     reentrantlock.lock();
-                    log.info("执行{}",c);
-                    reentrantlock.unlock();
+                    try {
+                        log.info("执行{}", c);
+                    }finally {
+
+                        reentrantlock.unlock();
+                    }
 
                 }
             }).start();
         }
         try {
             Thread.sleep(100);
-            //reentrantlock.unlock();
+            reentrantlock.unlock();
 
             Thread.sleep(1000);
         } catch (Exception e) {

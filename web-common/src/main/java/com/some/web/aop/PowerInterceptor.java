@@ -4,15 +4,14 @@ package com.some.web.aop;
 
 import com.some.common.exception.RespException;
 import com.some.common.exception.UnauthorizedException;
-import com.yoya.rdf.Rdf;
-import com.yoya.rdfext.kit.CookieUtil;
+import com.some.web.utils.CookieUtils;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -106,8 +105,7 @@ public class PowerInterceptor extends HandlerInterceptorAdapter {
                     }
                 } else {
                     // 最后如果还是为空则从cookie获取
-                    Cookie cookie = CookieUtil.getCookie(request.getCookies(), "token");
-                    tokenStr = cookie == null ? null : cookie.getValue();
+                    tokenStr = CookieUtils.getCookie(request, "token");
                 }
 
             }
@@ -141,7 +139,7 @@ public class PowerInterceptor extends HandlerInterceptorAdapter {
     }
 
     protected String getSecret(HttpServletRequest request) {
-        return Rdf.me().getConfig("app", "yoya_adapter_secret");
+        return "";
     }
 
     protected boolean realCheckToken(String token, String appsecret, HttpServletRequest request) {

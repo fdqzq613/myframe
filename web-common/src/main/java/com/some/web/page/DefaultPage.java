@@ -99,34 +99,35 @@ public class DefaultPage<T> extends PageImpl<T> implements IPage<T> {
 		return super.getSort();
 	}
 
+	@Override
 	public int getPageCount() {
 		return pageCount;
 	}
-
+	@Override
 	public void setPageCount(int pageCount) {
 		this.pageCount = pageCount;
 	}
-
+	@Override
 	public int getPage() {
 		return page;
 	}
-
+	@Override
 	public void setPage(int page) {
 		this.page = page;
 	}
-
+	@Override
 	public List<T> getList() {
 		return list;
 	}
-
+	@Override
 	public void setList(List<T> list) {
 		this.list = list;
 	}
-
+	@Override
 	public long getTotal() {
 		return total;
 	}
-
+	@Override
 	public void setTotal(long total) {
 		this.total = total;
 	}

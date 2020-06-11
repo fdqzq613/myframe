@@ -53,7 +53,7 @@ class MyFullBitMap {
      */
     public byte[] setBit(int num) {
 
-        long bitIndex = num + (1l << 31); // 获取num数据对应bit数组（虚拟）的索引
+        long bitIndex = num + (1L << 31); // 获取num数据对应bit数组（虚拟）的索引
         int index = (int) (bitIndex / 8); // bit数组（虚拟）在byte数组中的索引
         int innerIndex = (int) (bitIndex % 8); // bitIndex 在byte[]数组索引index 中的具体位置
 
@@ -75,7 +75,7 @@ class MyFullBitMap {
             for (int j = 0; j < 8; j++) {
                 if (((bytes[i]) & (1 << j)) != 0) {
                     count++;
-                    int number = (int) ((((long) i * 8 + j) - (1l << 31)));
+                    int number = (int) ((((long) i * 8 + j) - (1L << 31)));
                      System.out.println("取出的第 " + count + "\t个数: " + number);
                 }
             }

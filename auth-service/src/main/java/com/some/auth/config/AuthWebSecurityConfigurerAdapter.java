@@ -40,7 +40,7 @@ public class AuthWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapt
 //                .antMatchers("/", "/index","/login","/error").permitAll()
 //                .anyRequest().authenticated()
 //        ;
-        http
+        http.csrf().disable()
                 .requestMatchers().antMatchers("/**")
                 .and()
                 .authorizeRequests()

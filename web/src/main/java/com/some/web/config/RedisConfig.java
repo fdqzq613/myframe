@@ -23,8 +23,6 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
-import com.yoya.rdf.Rdf;
-import com.yoya.rdfext.config.CenterConfig;
 
 import redis.clients.jedis.JedisPoolConfig;
 

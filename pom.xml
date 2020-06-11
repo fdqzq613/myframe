@@ -102,6 +102,21 @@
                 <artifactId>rxjava</artifactId>
                 <version>2.2.19</version>
             </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.1.22</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>1.13.1</version>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>3.3.0</version>
+            </dependency>
             <!--alibaba -->
             <dependency>
                 <groupId>com.alibaba.boot</groupId>
@@ -236,6 +251,16 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>2.0.1.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>6.1.5.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -430,25 +455,7 @@
                 <artifactId>transmittable-thread-local</artifactId>
                 <version>2.11.4</version>
             </dependency>
-            <!-- RDF不兼容 <dependency> <groupId>com.squareup.okhttp3</groupId> <artifactId>okhttp</artifactId>
-                <version>4.4.1</version> </dependency> <dependency> <groupId>com.squareup.okio</groupId>
-                <artifactId>okio</artifactId> <version>2.4.3</version> </dependency> -->
-            <!-- 语音相关 -->
-            <dependency>
-                <groupId>com.iflytek</groupId>
-                <artifactId>Korea_Voiceware</artifactId>
-                <version>1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.iflytek</groupId>
-                <artifactId>Msc</artifactId>
-                <version>1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.iflytek</groupId>
-                <artifactId>java</artifactId>
-                <version>1.0.2</version>
-            </dependency>
+
 
             <!--logback-->
             <dependency>
@@ -488,38 +495,10 @@
 
         </dependencies>
     </dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.yoya</groupId>
-            <artifactId>rdf</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.easymock</groupId>
-            <artifactId>easymock</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-            <version>2.1.4.RELEASE</version>
-        </dependency>
-
-    </dependencies>
     <build>
         <pluginManagement>
             <plugins>
-                <!-- compiler???, ??JDK??? -->
+                <!-- compiler JDK1.8 -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -571,9 +550,9 @@
         <module>gateway</module>
         <module>common</module>
         <module>web-common</module>
+        <module>rpc-interface</module>
         <module>eureka-service</module>
         <module>eureka-client</module>
-        <module>rpc-interface</module>
         <module>example</module>
         <module>eureka-gray-client</module>
         <module>web</module>
