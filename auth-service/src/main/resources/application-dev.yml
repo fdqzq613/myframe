@@ -1,6 +1,7 @@
 server:
   port: 7585
   servlet:
+    #这里一定要配置，否则本地IP访问授权会不成
     context-path: /sso
 
 

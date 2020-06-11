@@ -46,7 +46,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // 当采取client模式认证时，对应的权限也就是客户端自己的authorities
         clients.inMemory().withClient("client_1")
                 .resourceIds(DEMO_RESOURCE_ID)
-                .redirectUris("http://localhost:7589/callback","http://localhost:7589/login")
+                .redirectUris("http://localhost:7589/login")
                 //.authorizedGrantTypes("authorization_code","password", "refresh_token")
                 //password模式，自己本身有一套用户体系，在认证时需要带上自己的用户名和密码，以及客户端的client_id,client_secret
                 // 此时，accessToken所包含的权限是用户本身的权限，而不是客户端的权限
@@ -59,7 +59,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
                 .and().withClient("client_2")
                 .resourceIds(DEMO_RESOURCE_ID)
-                .redirectUris("http://localhost:7589/callback","http://localhost:7589/login","http://localhost:7589/api/testPower")
+                .redirectUris("http://localhost:7589/login")
                 //.authorizedGrantTypes("authorization_code","password", "refresh_token")
                 .authorizedGrantTypes("authorization_code", "implicit","refresh_token")
                 .accessTokenValiditySeconds(3600) // 设置 token 过期时间
