@@ -12,4 +12,5 @@ public class AjaxUtils {
     public static boolean isAjax(HttpServletRequest request){
         return  	request.getHeader("X-Requested-With") != null && request.getHeader("X-Requested-With").equalsIgnoreCase("XMLHttpRequest");
     }
+
 }

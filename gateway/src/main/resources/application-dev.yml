@@ -1,6 +1,7 @@
 server:
   port: 8682
-
+  main:
+    allow-bean-definition-overriding: true
 spring:
   application:
     name: cloud-gateway
@@ -10,8 +11,8 @@ spring:
         - id: api
           uri: lb://some-api-service
           predicates:
-            #http://localhost:8682/gray/test/get
-            - Path=/gray/**
+            #http://localhost:8682/api/test/get
+            - Path=/api/**
             - Weight=apiservice, 1
           filters:
             - name: RequestRateLimiter
@@ -30,6 +31,7 @@ spring:
             - RewritePath=/gray/(?<segment>.*),/$\{segment}
         - id: api-gray
           uri: lb://some-api-gray-service
+          #http://localhost:8682/gray/test/get
           predicates:
             - Path=/gray/**
             - Weight=apiservice, 2
@@ -48,6 +50,8 @@ spring:
                 fallbackUri: 'forward:/fallback'
             - Token
             - RewritePath=/gray/(?<segment>.*),/$\{segment}
+
+
   #redis集群
   redis:
     host: 192.168.20.138
@@ -79,6 +83,20 @@ hystrix:
             timeoutInMilliseconds: 15000
         timeout:
           enabled: true
+
+#oauth2配置
+auth-server: http://localhost:7585/sso
+security:
+  oauth2:
+    client:
+      client-id: client_2
+      client-secret: 123456
+      user-authorization-uri: ${auth-server}/oauth/authorize
+      access-token-uri: ${auth-server}/oauth/token
+    resource:
+      jwt:
+        key-uri: ${auth-server}/oauth/token_key
+      scope: all
 
 #Eureka 相关配置
 eureka:

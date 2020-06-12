@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @Classname CustomAccessDeniedHandler
  * @Description 没有权限的
- * @Author 李号东 lihaodongmail@163.com
- * @Date 2019-03-20 13:19
  * @Version 1.0
  */
 @Component("customAccessDeniedHandler")
