@@ -1,34 +1,28 @@
 package some.gateway.common;
 
 import com.some.common.result.RespResult;
-import com.some.common.utils.AjaxUtils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR;
 
 /**
  * 
@@ -39,6 +33,8 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
 @Slf4j
 @Component
 public class TokenGatewayFilter implements GatewayFilter ,Ordered{
+	@Autowired
+	private RedisTemplate redisTemplate;
 	/**
 	 * @return
 	 * @author qzq
@@ -51,6 +47,8 @@ public class TokenGatewayFilter implements GatewayFilter ,Ordered{
 	}
 
 	/**
+	 * test --http://localhost:8682/api/test/feignGet?token=1233
+	 *  ---未登录测试 http://localhost:8682/api/test/feignGet
 	 * @param exchange
 	 * @param chain
 	 * @return
@@ -59,7 +57,20 @@ public class TokenGatewayFilter implements GatewayFilter ,Ordered{
 	 */
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		
+
+		String url = exchange.getRequest().getURI().getPath();
+//		//登录后回调
+//		if(url.indexOf("callback")!=-1){
+//			return 	exchange.getSession().flatMap(webSession -> {
+//				ServerHttpRequest req = exchange.getRequest();
+//				ServerWebExchangeUtils.addOriginalRequestUrl(exchange, req.getURI());
+//				String redirect_uri = webSession.getAttribute("redirect_uri");
+//				String access_token = req.getQueryParams().getFirst("access_token");
+//				ServerHttpRequest request = req.mutate().header("Authorization",access_token).path(redirect_uri).build();
+//				exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR, request.getURI());
+//				return chain.filter(exchange.mutate().request(request).build());
+//			});
+//		}
 		String token = null;
 		//从header取
 		token = exchange.getRequest().getHeaders().getFirst("Authorization");
@@ -86,11 +97,12 @@ public class TokenGatewayFilter implements GatewayFilter ,Ordered{
 					log.info("websession: {}", webSession.getId());
 					ServerHttpRequest req = exchange.getRequest();
 					ServerWebExchangeUtils.addOriginalRequestUrl(exchange, req.getURI());
-					String newPath = "/api/login";
+					//统一登录页面--采用简化模式，直接返回access_token
+					String newPath = "/api/login?redirect_uri=http://localhost:8682"+exchange.getRequest().getURI().getPath();
 					ServerHttpRequest request = req.mutate().path(newPath).build();
 					//1.记录原路径，用于认证成功后跳转--2.跳转回来后，gateway作为资源服务器判断资源的权限
 					exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR, request.getURI());
-					webSession.getAttributes().put(webSession.getId(),exchange.getRequest().getURI());
+					webSession.getAttributes().put("redirect_uri",exchange.getRequest().getURI().getPath());
 					return chain.filter(exchange.mutate().request(request).build());
 				});
 			}else {
@@ -98,7 +110,7 @@ public class TokenGatewayFilter implements GatewayFilter ,Ordered{
 			}
 		}
 
-		//TODO 校验jwt token
+		//TODO 校验jwt token  资源权限等
 		
 		return chain.filter(exchange);
 	}
@@ -115,23 +127,5 @@ public class TokenGatewayFilter implements GatewayFilter ,Ordered{
 	public static boolean isAjax(ServerHttpRequest request){
 		return  	request.getHeaders().getFirst("X-Requested-With") != null && request.getHeaders().getFirst("X-Requested-With").equalsIgnoreCase("XMLHttpRequest");
 	}
-	@Value("${security.oauth2.client.client-id}")
-	private String clientId;
-	@Value("${security.oauth2.client.client-secret}")
-	private String clientSecret;
-	//http://localhost:7585/oauth/authorize?client_id=client_2&redirect_uri=http://localhost:7589/callback&response_type=code&scope=all&state=zTf6yW
-	@GetMapping("/callback")
-	public String callback(String code) {
-		String url = "http://localhost:7585/oauth/token";
-		Map<String,String> paramsMap = new HashMap<>();
-		paramsMap.put("grant_type","authorization_code");
-		paramsMap.put("code",code);
-		paramsMap.put("client_id",clientId);
-		paramsMap.put("client_secret",clientSecret);
-		//验证后 跳转地址 前台用
-		paramsMap.put("redirect_uri","http://localhost:7589/api/testPower");
-		String rs = null;
-		//String rs = HttpClientUtils.httpPost(url,paramsMap);
-		return rs;
-	}
+
 }

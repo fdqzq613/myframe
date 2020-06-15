@@ -22,8 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
     @ApiOperation(value = "登录页", notes = "登录页", httpMethod = "GET")
     @RequestMapping("/login")
-    public String page(HttpServletRequest request) {
-        return "redirect:http://www.baidu.com";
+    public String page(HttpServletRequest request,String redirect_uri) {
+
+        //登录页面，这里为了方便测试直接默认自动登录成功，返回access_token
+        //return "redirect:http://www.baidu.com";
+
+
+        return "redirect:"+redirect_uri+"?token=test123";
     }
 
 }

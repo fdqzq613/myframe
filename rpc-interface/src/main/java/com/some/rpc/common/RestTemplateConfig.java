@@ -1,4 +1,4 @@
-package com.some.client.config;
+package com.some.rpc.common;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
@@ -12,7 +12,6 @@ import org.springframework.cloud.openfeign.support.SpringDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.client.RestTemplate;
 
 import feign.codec.Decoder;

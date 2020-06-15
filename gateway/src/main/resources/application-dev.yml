@@ -109,3 +109,6 @@ eureka:
       register-with-eureka: false
 
 
+logging:
+  level:
+    root: debug
