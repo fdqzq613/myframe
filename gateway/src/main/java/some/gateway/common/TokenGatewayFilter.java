@@ -33,8 +33,6 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Component
 public class TokenGatewayFilter implements GatewayFilter ,Ordered{
-	@Autowired
-	private RedisTemplate redisTemplate;
 	/**
 	 * @return
 	 * @author qzq
