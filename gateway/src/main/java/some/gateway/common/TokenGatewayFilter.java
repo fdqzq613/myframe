@@ -79,12 +79,7 @@ public class TokenGatewayFilter implements GatewayFilter ,Ordered{
 
 			if(!isAjax(exchange.getRequest())){
 
-				//记录当前页面
-				exchange.getSession().flatMap(webSession -> {
-					log.info("websession: {}", webSession.getId());
-					webSession.getAttributes().put(webSession.getId(),exchange.getRequest().getURI());
-					return chain.filter(exchange);
-				});
+
 				//跳转到登录页面
 				//return chain.filter(exchange.mutate().request(request).build());
 				return 	exchange.getSession().flatMap(webSession -> {
