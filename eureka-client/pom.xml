@@ -18,6 +18,10 @@
         </dependency>
         <dependency>
             <groupId>com.some</groupId>
+            <artifactId>web-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.some</groupId>
             <artifactId>rpc-interface</artifactId>
         </dependency>
 

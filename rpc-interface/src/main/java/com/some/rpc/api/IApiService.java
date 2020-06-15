@@ -16,6 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface IApiService {
 
 	
-	@RequestMapping(value = "/test/get")
+	@RequestMapping(value = "/test/get" )
 	RespResult<String> get();
 }

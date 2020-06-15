@@ -100,7 +100,7 @@ public class GlobalExceptionHandler {
 				}else{
 					//其他路径的要打印日志
 					logger.warn("返回，编码：" + respException.getCode() + "；消息：" + e.getMessage());
-					if (!AjaxUtils.isAjax(request)) {
+					if (!AjaxUtils.isAjax(request)&&"false".equals(request.getAttribute("isJson"))) {
 						Object defUrl = request.getAttribute(DEF_LOGIN_URL);
 						return defUrl==null?new ModelAndView("redirect:/login"):new ModelAndView("redirect:"+defUrl);
 					}

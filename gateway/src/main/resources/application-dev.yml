@@ -11,7 +11,7 @@ spring:
         - id: api
           uri: lb://some-api-service
           predicates:
-            #http://localhost:8682/api/test/get
+            #http://localhost:8682/api/test/get?token=1233
             - Path=/api/**
             - Weight=apiservice, 1
           filters:

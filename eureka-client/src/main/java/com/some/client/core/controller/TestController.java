@@ -1,6 +1,7 @@
 package com.some.client.core.controller;
 
 import com.some.common.result.RespResult;
+import com.some.common.utils.UserUtils;
 import com.some.rpc.api.IApiService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,8 +28,8 @@ public class TestController {
     @ApiOperation(value = "注册到eureka的服务", notes = "注册到eureka的服务", httpMethod = "GET")
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public RespResult<String> get() {
-        log.info("test");
-        return RespResult.create("test");
+        log.info("test：user_id:{}",UserUtils.getUserId());
+        return RespResult.create("test--user_id:"+UserUtils.getUserId());
     }
 
 
