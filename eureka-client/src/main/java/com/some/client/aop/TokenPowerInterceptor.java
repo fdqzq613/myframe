@@ -1,10 +1,14 @@
 package com.some.client.aop;
 
+import com.some.common.constants.SystemEnum;
 import com.some.common.exception.RespException;
 import com.some.common.exception.UnauthorizedException;
+import com.some.common.result.RespResult;
+import com.some.common.utils.TokenUtils;
 import com.some.common.utils.UserUtils;
 import com.some.web.utils.CookieUtils;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -96,6 +100,12 @@ public class TokenPowerInterceptor extends HandlerInterceptorAdapter {
 
     protected boolean checkAuth(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
+            String userId = request.getHeader("userId");
+            //gateway已经认证过了  直接赋值userId
+            if(!StringUtils.isEmpty(userId)){
+                UserUtils.setUserId(userId,null,request);
+                return true;
+            }
             // 优先从参数token获取
             String tokenStr = request.getParameter("token");
             if (StringUtils.isEmpty(tokenStr)) {
@@ -174,8 +184,13 @@ public class TokenPowerInterceptor extends HandlerInterceptorAdapter {
 //		String userId = (String) body.get("user_id");
 //		// 通过保存用户id
 //		UserUtils.setUserId(userId,token,request);
-        //测试用
-        UserUtils.setUserId(token,token,request);
+        //校验jwt token
+        SystemEnum.codesEnum code = TokenUtils.getInstance().isValidDefault(token);
+        if(code.getCode()!=SystemEnum.codesEnum.SUCCESS.getCode()){
+            throw new UnauthorizedException(code.getMsg());
+        }
+        String userId = TokenUtils.getInstance().getUserId(token);
+        UserUtils.setUserId(userId,token,request);
         return true;
     }
 }

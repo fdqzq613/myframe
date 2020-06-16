@@ -1,4 +1,4 @@
-package some.gateway.common;
+package com.some.gateway.common;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.gateway.config.LoadBalancerProperties;

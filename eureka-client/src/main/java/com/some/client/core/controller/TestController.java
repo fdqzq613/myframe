@@ -36,6 +36,7 @@ public class TestController {
     @ApiOperation(value = "feign调用", notes = "feign调用", httpMethod = "GET")
     @RequestMapping(value = "/feignGet", method = RequestMethod.GET)
     public RespResult<String> feignGet() {
+        log.info("gateway传递的：user_id:{}",UserUtils.getUserId());
         return apiService.get();
     }
 }

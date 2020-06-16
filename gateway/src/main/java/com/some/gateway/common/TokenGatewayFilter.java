@@ -1,15 +1,15 @@
-package some.gateway.common;
+package com.some.gateway.common;
 
+import com.some.common.constants.SystemEnum;
 import com.some.common.result.RespResult;
+import com.some.common.utils.TokenUtils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -95,7 +95,7 @@ public class TokenGatewayFilter implements GatewayFilter ,Ordered{
 					log.info("websession: {}", webSession.getId());
 					ServerHttpRequest req = exchange.getRequest();
 					ServerWebExchangeUtils.addOriginalRequestUrl(exchange, req.getURI());
-					//统一登录页面--采用简化模式，直接返回access_token
+					//统一登录页面--采用简化模式，直接返回access_token --测试用调用eureka-client的登录
 					String newPath = "/api/login?redirect_uri=http://localhost:8682"+exchange.getRequest().getURI().getPath();
 					ServerHttpRequest request = req.mutate().path(newPath).build();
 					//1.记录原路径，用于认证成功后跳转--2.跳转回来后，gateway作为资源服务器判断资源的权限
@@ -108,9 +108,17 @@ public class TokenGatewayFilter implements GatewayFilter ,Ordered{
 			}
 		}
 
-		//TODO 校验jwt token  资源权限等
-		
-		return chain.filter(exchange);
+		//校验jwt token
+		SystemEnum.codesEnum code = TokenUtils.getInstance().isValidDefault(token);
+		if(code.getCode()!=SystemEnum.codesEnum.SUCCESS.getCode()){
+			return responseFailRs(exchange, RespResult.create(code));
+		}
+		String userId = TokenUtils.getInstance().getUserId(token);
+		//TODO 校验资源权限
+
+		//传递userId
+		ServerHttpRequest request = exchange.getRequest().mutate().header("userId",userId).build();
+		return chain.filter(exchange.mutate().request(request).build());
 	}
 	
 	 private Mono<Void> responseFailRs(ServerWebExchange exchange, RespResult RespResult) {

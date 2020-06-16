@@ -1,4 +1,4 @@
-package com.some.web.utils;
+package com.some.common.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.boot.CommandLineRunner;

@@ -22,6 +22,11 @@ public class FeignConfiguration implements RequestInterceptor {
 
 	@Override
 	public void apply(RequestTemplate requestTemplate) {
+		String userId = UserUtils.getUserId();
+		if(!StringUtils.isEmpty(userId)){
+			requestTemplate.header("userId", userId);
+			return;
+		}
 		String token = UserUtils.getToken();
 		if(StringUtils.isEmpty(token)){
 			ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

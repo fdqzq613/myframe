@@ -1,4 +1,4 @@
-package some.gateway.common;
+package com.some.gateway.common;
 
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;

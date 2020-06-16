@@ -1,12 +1,9 @@
-package some;
+package com.some;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
 
 @SpringBootApplication

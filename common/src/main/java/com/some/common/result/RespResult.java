@@ -35,6 +35,10 @@ public class RespResult<T> implements IResult,Serializable{
 	public static <T> RespResult<T> create(int code, String msg) {
 		return new RespResult<T>(code, msg);
 	}
+	public static <T> RespResult<T> create(IMsgEnum msgEnum) {
+		return new RespResult<T>(msgEnum.getCode(), msgEnum.getMsg());
+	}
+
 
 	public static <T> RespResult<T> create(int code, String msg, T data) {
 		return new RespResult<T>(code, msg, data);

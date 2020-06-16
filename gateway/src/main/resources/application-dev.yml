@@ -84,19 +84,24 @@ hystrix:
         timeout:
           enabled: true
 
-#oauth2配置
-auth-server: http://localhost:7585/sso
-security:
-  oauth2:
-    client:
-      client-id: client_2
-      client-secret: 123456
-      user-authorization-uri: ${auth-server}/oauth/authorize
-      access-token-uri: ${auth-server}/oauth/token
-    resource:
-      jwt:
-        key-uri: ${auth-server}/oauth/token_key
-      scope: all
+##oauth2配置
+#auth-server: http://localhost:7585/sso
+#security:
+#  oauth2:
+#    client:
+#      client-id: client_2
+#      client-secret: 123456
+#      user-authorization-uri: ${auth-server}/oauth/authorize
+#      access-token-uri: ${auth-server}/oauth/token
+#    resource:
+#      jwt:
+#        key-uri: ${auth-server}/oauth/token_key
+#      scope: all
+##自定义oauth2
+oauth2:
+  default:
+    clientId: system
+    clientSecret: 59cdf4b8e4b0cf0b5473011a00000000
 
 #Eureka 相关配置
 eureka:

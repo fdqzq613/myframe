@@ -1,5 +1,8 @@
 package com.some.client.core.controller;
 
+import com.some.common.utils.TokenUtils;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,8 +30,10 @@ public class LoginController {
         //登录页面，这里为了方便测试直接默认自动登录成功，返回access_token
         //return "redirect:http://www.baidu.com";
 
+        //jwt token
+        String token = TokenUtils.getInstance().getDefaultToken("qzq");
 
-        return "redirect:"+redirect_uri+"?token=test123";
+        return "redirect:"+redirect_uri+"?token="+token;
     }
 
 }

@@ -5,7 +5,7 @@ public class SystemEnum {
 	//返回代码常量
 	public enum codesEnum implements IMsgEnum{
 		ERROR_UNAUTHORIZED(401,"未授权" ),ERROR_TOKEN_TIMEOUT(408,"令牌超时" ),
-		SUCCESS(200,"success" ),FAIL(969,"fail" ),ERROR_RUNTIME(906,"接口异常:{0}" )
+		SUCCESS(200,"success" ),ERROR_TOKEN_INVALID(703,"令牌失效" ),ERROR_SIGN_DECODE(702,"签名解码失败" ),FAIL(969,"fail" ),ERROR_RUNTIME(906,"接口异常:{0}" )
 		;
     
 	private int code;

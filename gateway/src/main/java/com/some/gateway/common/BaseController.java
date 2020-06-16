@@ -1,4 +1,4 @@
-package some.gateway.common;
+package com.some.gateway.common;
 
 import com.some.common.constants.SystemEnum;
 import com.some.common.result.RespResult;

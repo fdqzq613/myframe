@@ -1,4 +1,4 @@
-package some.gateway.hystrix;
+package com.some.gateway.hystrix;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

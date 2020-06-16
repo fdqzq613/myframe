@@ -1,4 +1,4 @@
-package some.gateway.common;
+package com.some.gateway.common;
 
 import com.netflix.loadbalancer.ILoadBalancer;
 import com.netflix.loadbalancer.RoundRobinRule;
@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @description: RoundRobinRule

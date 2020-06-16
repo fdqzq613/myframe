@@ -1,5 +1,6 @@
 package com.some.order.coordinator;
 
+import com.some.common.utils.ApplicationContextUtils;
 import com.some.order.cancel.KcCancel;
 import com.some.order.cancel.OrderCancel;
 import com.some.order.comfirm.KcComfirm;
@@ -7,13 +8,13 @@ import com.some.order.comfirm.OrderComfirm;
 import com.some.order.handler.KcHandler;
 import com.some.order.handler.OrderHandler;
 import com.some.order.mq.vo.KcOrderVo;
-import com.some.web.utils.ApplicationContextUtils;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,7 +44,7 @@ public class OrderCoordinator {
     }
     public void orderTry(KcOrderVo kcOrderVo){
         TccWorker orderWorker = new TccWorker("order",null,new OrderComfirm(),new OrderCancel(),ApplicationContextUtils.getBean(OrderHandler.class));
-        TccWorker kcWorker = new TccWorker("kc",null,new KcComfirm(),new KcCancel(),ApplicationContextUtils.getBean(KcHandler.class));
+        TccWorker kcWorker = new TccWorker("kc",null,new KcComfirm(),new KcCancel(), ApplicationContextUtils.getBean(KcHandler.class));
         works.put(orderWorker.getName(),orderWorker);
         works.put(kcWorker.getName(),kcWorker);
         this.kcOrderVo = kcOrderVo;

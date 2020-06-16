@@ -1,5 +1,7 @@
 package com.some.web.utils;
 
+import com.some.common.utils.ApplicationContextUtils;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**

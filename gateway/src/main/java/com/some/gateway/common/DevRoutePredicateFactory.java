@@ -1,4 +1,4 @@
-package some.gateway.common;
+package com.some.gateway.common;
 
 import org.springframework.cloud.gateway.handler.predicate.AbstractRoutePredicateFactory;
 import org.springframework.http.HttpHeaders;
