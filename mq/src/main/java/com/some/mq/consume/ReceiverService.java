@@ -24,7 +24,14 @@ public class ReceiverService {
 		log.info("1接收到消息:{}",msg);
 		//
 		try {
+			//deliveryTag:该消息的index
+			//multiple：是否批量. true 将一次性ack所有小于deliveryTag的消息。
 			channel.basicAck(deliveryTag, false);//手动确认
+
+			//deliveryTag:该消息的index。
+			//multiple：是否批量. true：将一次性拒绝所有小于deliveryTag的消息。
+			//requeue：被拒绝的是否重新入队列。
+			//channel.basicNack(deliveryTag, false,true);
 		} catch (IOException e) {
 			log.error("手动确认失败",e);
 		}
@@ -34,6 +41,18 @@ public class ReceiverService {
 	public void onReceiver2(String msg,@Header(AmqpHeaders.CHANNEL) Channel channel,
 						   @Header(AmqpHeaders.DELIVERY_TAG) Long deliveryTag){
 		log.info("2接收到消息:{}",msg);
+		//
+		try {
+			channel.basicAck(deliveryTag, false);//手动确认
+		} catch (IOException e) {
+			log.error("手动确认失败",e);
+		}
+	}
+
+	@StreamListener(StreamInputChannel.INPUT3)
+	public void onReceiver3(String msg,@Header(AmqpHeaders.CHANNEL) Channel channel,
+						   @Header(AmqpHeaders.DELIVERY_TAG) Long deliveryTag){
+		log.info("1接收到消息:{}",msg);
 		//
 		try {
 			channel.basicAck(deliveryTag, false);//手动确认

@@ -20,6 +20,12 @@ spring:
               exchangeType: topic  #默认是topic
               #bindingRoutingKey: #
               bindingRoutingKey: some2-key # 设置一个RoutingKey信息
+          some-input3: #路由健 名称默认跟这一致
+            consumer:
+              acknowledge-mode: manual #要在这配置
+              exchangeType: topic  #默认是topic
+              #bindingRoutingKey: #
+              bindingRoutingKey: test-routingKey
           some-output:
             producer:
               exchangeType: topic
@@ -58,3 +64,9 @@ spring:
                 username: guest
                 password: guest
                 virtual-host: /
+
+  rabbitmq:
+    template:
+      mandatory: true
+    publisher-confirms: true
+    publisher-returns: true
