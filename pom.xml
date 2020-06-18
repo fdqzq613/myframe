@@ -570,10 +570,10 @@
         </resources>
     </build>
     <modules>
-        <module>gateway</module>
         <module>common</module>
         <module>web-common</module>
         <module>rpc-interface</module>
+        <module>gateway</module>
         <module>eureka-service</module>
         <module>eureka-client</module>
         <module>example</module>

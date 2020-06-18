@@ -1,4 +1,4 @@
-package com.some.gateway.config;//package com.yoya.movie.config;
+package com.some.gateway.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 
