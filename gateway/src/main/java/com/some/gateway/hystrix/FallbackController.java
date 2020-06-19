@@ -10,7 +10,6 @@ import com.some.common.result.RespResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,8 +23,6 @@ import javax.annotation.PostConstruct;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
-
-import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR;
 
 /**
  * 
@@ -118,6 +115,7 @@ public class FallbackController {
 			log.info(cache.get("ss"));
 			cache.put("22","66");
 			log.info(cache.get("22"));
+			log.info(cache.stats().toString());
 			Thread.sleep(1000*2);
 			log.info(cache.get("22"));
 		} catch (Exception e) {
