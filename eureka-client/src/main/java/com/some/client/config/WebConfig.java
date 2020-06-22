@@ -7,9 +7,12 @@ import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 import com.some.client.aop.TokenPowerInterceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -42,5 +45,15 @@ public class WebConfig  implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(powerInterceptor).addPathPatterns("/**");
 	}
+
+//	@Bean  //http://localhost:8086/actuator/hystrix.stream
+//	public ServletRegistrationBean getServlet(){
+//		HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
+//		ServletRegistrationBean registrationBean = new ServletRegistrationBean(streamServlet);
+//		registrationBean.setLoadOnStartup(1);
+//		registrationBean.addUrlMappings("/actuator/hystrix.stream");
+//		registrationBean.setName("HystrixMetricsStreamServlet");
+//		return registrationBean;
+//	}
 
 }

@@ -1,5 +1,6 @@
 package com.some.client.core.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.some.common.result.RespResult;
 import com.some.common.utils.UserUtils;
 import com.some.rpc.api.IApiService;
@@ -33,6 +34,7 @@ public class TestController {
     }
 
 
+    @HystrixCommand
     @ApiOperation(value = "feign调用", notes = "feign调用", httpMethod = "GET")
     @RequestMapping(value = "/feignGet", method = RequestMethod.GET)
     public RespResult<String> feignGet() {

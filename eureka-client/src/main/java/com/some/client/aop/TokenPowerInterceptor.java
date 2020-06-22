@@ -35,7 +35,7 @@ public class TokenPowerInterceptor extends HandlerInterceptorAdapter {
      */
     protected static String[] noAuthUrls = new String[]{
 
-            "/getToken", "/error", "/csrf", "/swagger", "/login", "/p/"};
+            "/getToken", "/error", "/csrf", "/swagger", "/login", "/p/","/hystrix","/actuator"};
 
 
     /**
@@ -95,6 +95,9 @@ public class TokenPowerInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
+        if(1==1){
+            return true;
+        }
         return false;
     }
 
