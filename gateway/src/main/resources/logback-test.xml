@@ -4,7 +4,7 @@
 	<property name="project_name" value="gateway" />
 	<property name="LOG_HOME" value="${catalina.base}/logs" />
   
-	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="FILL-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
 				
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 日志文件命名策略 -->
@@ -21,6 +21,21 @@
     	
 	</appender>
 
+	<appender name="ERROR-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} |-%level in %class{30}::%method:%L - %msg %n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 日志文件命名策略 -->
+			<FileNamePattern>${LOG_HOME}/${project_name}_%d{yyyy-MM-dd}_error.log</FileNamePattern>
+			<!-- 只保留30天的日志记录 -->
+			<MaxHistory>30</MaxHistory>
+
+		</rollingPolicy>
+	</appender>
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<!-- <Encoding>UTF-8</Encoding> -->
 		<encoder>
@@ -29,10 +44,33 @@
 		</encoder>
 	</appender>
 
+
+
+	<!-- 异步输出 -->
+	<appender name="ASYNC-INFO" class="ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold>0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>256</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref="FILL-LOG"/>
+	</appender>
+	<appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold>0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>256</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref="ERROR-LOG"/>
+	</appender>
+
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE" />
+		<appender-ref ref="FILL-LOG" />
+		<appender-ref ref="ERROR-LOG"/>
 	</root>
+
+
 	
 	<logger name="druid.sql" level="INFO">
 		<appender-ref ref="STDOUT" />
@@ -52,7 +90,7 @@
     
       <logger name="jdbc.sqltiming" level="ERROR">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE" />
+        <appender-ref ref="FILL-LOG" />
     </logger>
 	
 </configuration>
