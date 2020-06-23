@@ -1,5 +1,13 @@
 server:
   port: 8080
+  connectionTimeout: 10s
+  ##org.springframework.boot.autoconfigure.web.ServerProperties
+  tomcat:
+    maxThreads: 500
+    minSpareThreads: 20 #最小空闲线程数
+    acceptCount: 500 #接收的队列数
+    maxConnections: 5000
+
 
 spring:
   application:
