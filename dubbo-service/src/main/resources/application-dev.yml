@@ -1,0 +1,42 @@
+server:
+  port: 9892
+  connectionTimeout: 10s
+  ##org.springframework.boot.autoconfigure.web.ServerProperties
+  tomcat:
+    maxThreads: 500
+    minSpareThreads: 20 #最小空闲线程数
+    acceptCount: 500 #接收的队列数
+    maxConnections: 5000
+
+nacos:
+  service-address: 192.168.20.101
+  port: 8848
+---
+dubbo:
+  application:
+    id: some-service-provider-dev
+    name: some-service-provider-dev
+  metadata-report:
+    address: nacos://${nacos.service-address}:${nacos.port}
+    cycle-report: false
+    retry-period: 5000
+    retry-times: 30
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 9696
+  provider:
+    timeout: 30000
+  registry:
+    address: nacos://${nacos.service-address}:${nacos.port}
+    id: movie-service-registry
+  scan:
+    basePackages: com.some
+some:
+  service:
+    version: 1.0.1  #服务版本号
+spring:
+  application:
+    name: dubbo-provider-dev
+  main:
+    allow-bean-definition-overriding: true

@@ -1,5 +1,17 @@
 package com.some.common.utils;
 
+import com.some.common.cache.DefaultTokenDisableCache;
+import com.some.common.cache.ITokenDisableCache;
+import com.some.common.constants.SystemEnum;
+import com.some.common.exception.RespException;
+import com.some.common.exception.TokenException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,19 +20,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-
-import com.some.common.cache.DefaultTokenDisableCache;
-import com.some.common.cache.ITokenDisableCache;
-import com.some.common.constants.SystemEnum;
-import com.some.common.exception.RespException;
-import com.some.common.exception.TokenException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

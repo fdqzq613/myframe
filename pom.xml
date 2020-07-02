@@ -23,7 +23,7 @@
         <spring.cloud.version>2.0.3.RELEASE</spring.cloud.version>
         <spring.zuul.version>1.4.5.RELEASE</spring.zuul.version>
         <swagger.version>2.7.0</swagger.version>
-        <dubbo.version>2.7.3</dubbo.version>
+        <dubbo.version>2.7.7</dubbo.version>
         <mybatis-plus-boot-starter.version>3.0.5</mybatis-plus-boot-starter.version>
 
         <elasticsearch.version>7.7.0</elasticsearch.version>
@@ -55,6 +55,11 @@
             <dependency>
                 <groupId>com.some</groupId>
                 <artifactId>web-common</artifactId>
+                <version>${some.web-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.some</groupId>
+                <artifactId>dubbo-interface</artifactId>
                 <version>${some.web-common.version}</version>
             </dependency>
             <dependency>
@@ -450,7 +455,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-registry-nacos</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo</artifactId>
@@ -541,6 +550,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -614,5 +624,8 @@
         <module>es</module>
         <module>auth-service</module>
         <module>auth-client</module>
+        <module>dubbo-service</module>
+        <module>dubbo-consumer</module>
+        <module>dubbo-interface</module>
     </modules>
 </project>
