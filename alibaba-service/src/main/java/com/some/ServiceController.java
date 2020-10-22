@@ -5,6 +5,8 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.java.Log;
+
 /**
  * @description:
  * @vsersion: V1.0
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/service")
 @RefreshScope
+@Log
 public class ServiceController {
 
     @Value("${some.serviceSome}")
@@ -23,6 +26,7 @@ public class ServiceController {
 //http://localhost:8858/service/getNacos
     @RequestMapping("/getNacos")
     public String getNacos() {
+        log.info("getNacos");
         return serviceSome;
     }
 }

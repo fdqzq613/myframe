@@ -19,7 +19,9 @@ import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 @Configuration
@@ -64,20 +66,28 @@ public class RedisConfig extends CachingConfigurerSupport{
 						.fromConnectionFactory(template.getConnectionFactory())
 						// 缓存配置
 						.cacheDefaults(defaultCacheConfiguration)
+						.initialCacheNames(getCacheNames())
+						.withInitialCacheConfigurations(getRedisCacheConfigurationMap(template))
 						// 配置同步修改或删除 put/evict
-						.transactionAware().withInitialCacheConfigurations(getRedisCacheConfigurationMap(template))
+						.transactionAware()
 						.build();
 
 		return redisCacheManager;
 	}
 
+	private Set<String> getCacheNames(){
+		Set<String> cacheNames =  new HashSet<>();
+		cacheNames.add("shortCache");
+		return cacheNames;
+	}
 	/**
 	 * 设置过期时间
 	 * @return
 	 */
 	private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap(RedisTemplate<String, String> template) {
 		Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
-		redisCacheConfigurationMap.put("some", this.getRedisCacheConfigurationWithTtl(60,template));
+		//针对单独缓存的时间配置
+		redisCacheConfigurationMap.put("shortCache", this.getRedisCacheConfigurationWithTtl(60,template));
 		return redisCacheConfigurationMap;
 	}
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.some.common.constants.SystemEnum;
 import com.some.common.result.RespResult;
+import com.some.common.utils.UserUtils;
 import com.some.web.utils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +58,7 @@ public class BaseService<M extends BaseMapper<P>, P> extends ServiceImpl<M , P> 
 		respResult.setData(data);
 		return respResult;
 	}
-	
+
 
 	public <T> RespResult<T> getFailRespResult(T data){
 		RespResult<T> respResult = new RespResult<T>();
@@ -88,4 +89,8 @@ public class BaseService<M extends BaseMapper<P>, P> extends ServiceImpl<M , P> 
 	   protected  void copyPropertiesIgnoreNull(Object source, Object target){
 		   BeanUtils.copyPropertiesIgnoreNull(source, target);
 	   }
+
+	protected String getUserId(){
+		return UserUtils.getUserId();
+	}
 }
