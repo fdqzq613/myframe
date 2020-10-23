@@ -63,4 +63,27 @@ public class AssertUtils {
 			throw new RespException(msg);
 		}
 	}
+
+	/**
+	 * equals方法的判断，如果不相等则抛msg异常
+	 * @param src
+	 * @param dest
+	 * @param msg
+	 */
+	public static void assertIsEqual(Object src,Object dest,String msg){
+		if(src==null){
+			if(dest!=null){
+				throw new RespException(msg);
+			}
+			return;
+		}
+	   if(src instanceof Number){
+			if(src!=dest){
+				throw new RespException(msg);
+			}
+		}if(!src.equals(dest)){
+			throw new RespException(msg);
+		}
+
+	}
 }

@@ -92,15 +92,26 @@ public class TokenUtils {
 	}
 
 	/**
+	 * 项目间默认授信token
+	 * @param userMap
+	 * @return
+	 */
+	public  String getDefaultToken(Map<String, Object> userMap) {
+		long endTime = System.currentTimeMillis() + expiresTime;
+		Date expires = new Date(endTime);
+		return getToken(userMap, expires, defaultKey);
+	}
+
+	/**
 	 * 获取token签名
 	 * 
-	 * @param map
+	 * @param userMap
 	 * @param expires
 	 * @param key
 	 * @return
 	 * @author qzq
 	 */
-	public  String getToken(Map<String, Object> map, Date expires, Key key) {
+	public  String getToken(Map<String, Object> userMap, Date expires, Key key) {
 
 		if (expires == null) {
 			throw new NullPointerException("null expires is illegal");
@@ -111,7 +122,7 @@ public class TokenUtils {
 
 		// 用签名算法HS256和私钥key生成token
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-		String jwtString = Jwts.builder().setClaims(map).setIssuer("qzq")// 设置发行人
+		String jwtString = Jwts.builder().setClaims(userMap).setIssuer("qzq")// 设置发行人
 				.setExpiration(expires)// 过期时间
 				.setIssuedAt(new Date())// 设置现在时间
 				.signWith(signatureAlgorithm, key).compact();
@@ -264,6 +275,14 @@ public class TokenUtils {
 			throw new RespException(SystemEnum.codesEnum.ERROR_SIGN_DECODE);
 		}
 
+	}
+
+	public long getExpiresTime() {
+		return expiresTime;
+	}
+
+	public void setExpiresTime(long expiresTime) {
+		this.expiresTime = expiresTime;
 	}
 
 	public static void main(String[] args) throws Exception {
