@@ -622,5 +622,6 @@
         <module>dubbo-service</module>
         <module>dubbo-consumer</module>
         <module>dubbo-interface</module>
+        <module>create-code</module>
     </modules>
 </project>
