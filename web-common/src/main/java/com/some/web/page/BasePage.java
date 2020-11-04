@@ -1,5 +1,6 @@
 package com.some.web.page;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -45,7 +46,11 @@ public class BasePage<T> extends Page<T>{
 	public long getPage() {
 		return this.getCurrent();
 	}
-
+	@Override
+	@JSONField(serialize = false)
+	public List<T> getRecords() {
+		return super.getRecords();
+	}
 
 
 	/**

@@ -91,6 +91,7 @@ public class MpGenerator {
         Map<String, String> myPackage = new HashMap<>();
         String entityName = tableInfo.getEntityName();
         String codePath = rootPath + "/src/main/java/";
+        JSPPACKAGEPATH = JSPPACKAGEPATH.endsWith("/")?JSPPACKAGEPATH:JSPPACKAGEPATH+"/";
         String jspPath = rootPath + JSPPACKAGEPATH + entityName.toLowerCase();
         myPackage.put("Controller", MpGenerator.CONTROLLER_PACKAGEPATH );
         myPackage.put("Entity", MpGenerator.ENTITY_PACKAGEPATH );
