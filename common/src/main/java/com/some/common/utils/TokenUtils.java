@@ -232,12 +232,12 @@ public class TokenUtils {
 			return SystemEnum.codesEnum.ERROR_SIGN_DECODE;
 		}
 	}
-	public  String getUserId(String jwsToken) {
+	public  Long getUserId(String jwsToken) {
 		return getUserId(jwsToken,defaultKey);
 	}
-	public  String getUserId(String jwsToken, Key key) {
+	public  Long getUserId(String jwsToken, Key key) {
 		Claims body = getBody(jwsToken, key);
-		return body == null ? null : (String) body.get("userId");
+		return body == null ? null : (Long) body.get("userId");
 	}
 
 	public  String getUserCode(String jwsToken, Key key) {

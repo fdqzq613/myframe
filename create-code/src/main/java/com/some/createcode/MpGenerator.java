@@ -95,7 +95,7 @@ public class MpGenerator {
         String jspPath = rootPath + JSPPACKAGEPATH + entityName.toLowerCase();
         myPackage.put("Controller", MpGenerator.CONTROLLER_PACKAGEPATH );
         myPackage.put("Entity", MpGenerator.ENTITY_PACKAGEPATH );
-        myPackage.put("Mapper", MpGenerator.DAO_PACKAGEPATH );
+        myPackage.put("Mapper", MpGenerator.DAO_PACKAGEPATH+"." + entityName.toLowerCase() );
         myPackage.put("Service", MpGenerator.SERVICE_PACKAGEPATH );
         myPackage.put("queryVo", MpGenerator.VO_PACKAGEPATH + "." + entityName.toLowerCase() );
 

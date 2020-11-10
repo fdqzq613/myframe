@@ -165,7 +165,7 @@ public class BaseController {
         BeanUtils.copyPropertiesIgnoreNull(source, target);
     }
 
-    protected String getUserId() {
+    protected Long getUserId() {
         return UserUtils.getUserId();
     }
 }

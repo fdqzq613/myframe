@@ -90,7 +90,7 @@ public class BaseService<M extends BaseMapper<P>, P> extends ServiceImpl<M , P> 
 		   BeanUtils.copyPropertiesIgnoreNull(source, target);
 	   }
 
-	protected String getUserId(){
+	protected Long getUserId(){
 		return UserUtils.getUserId();
 	}
 }

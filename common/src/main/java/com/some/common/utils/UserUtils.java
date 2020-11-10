@@ -12,7 +12,7 @@ public class UserUtils {
 	/**
 	 * 当前登陆用户
  	 */
-	private static ThreadLocal<Map<String, String>> curUser = new ThreadLocal<>();
+	private static ThreadLocal<Map<String, Object>> curUser = new ThreadLocal<>();
 	/**
 	 * 
 	 * 重置
@@ -28,9 +28,9 @@ public class UserUtils {
 	 * @param userId
 	 * @author qzq
 	 */
-	public static void setUserId(String userId, String token, HttpServletRequest request) {
+	public static void setUserId(Long userId, String token, HttpServletRequest request) {
 
-		Map<String, String> info = new HashMap<>();
+		Map<String, Object> info = new HashMap<>();
 		info.put("user_id", userId);
 		info.put("token", token);
 		if (request != null) {
@@ -45,7 +45,7 @@ public class UserUtils {
 	 * @return
 	 * @author qzq
 	 */
-	public static Map<String, String> getUserDetail(){
+	public static Map<String, Object> getUserDetail(){
 		return curUser.get();
 	}
 	/**
@@ -54,8 +54,8 @@ public class UserUtils {
 	 * @return
 	 * @author qzq
 	 */
-	public static String getProp(String key){
-		Map<String, String> detail = getUserDetail();
+	public static Object getProp(String key){
+		Map<String, Object> detail = getUserDetail();
 		if(detail==null){
 			return null;
 		}
@@ -67,7 +67,7 @@ public class UserUtils {
 	 * @param request
 	 * @author qzq
 	 */
-	public static void setUserId( Map<String, String> info, HttpServletRequest request) {
+	public static void setUserId( Map<String, Object> info, HttpServletRequest request) {
 		curUser.set(info);
 	}
 
@@ -79,8 +79,8 @@ public class UserUtils {
 	 * @return
 	 * @author qzq
 	 */
-	public static String getUserId() {
-		return curUser.get() == null ? null : curUser.get().get("user_id");
+	public static Long getUserId() {
+		return curUser.get() == null ? null : (Long)curUser.get().get("user_id");
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class UserUtils {
 	 * @author qzq
 	 */
 	public static String getToken() {
-		return curUser.get() == null ? null : curUser.get().get("token");
+		return curUser.get() == null ? null : (String)curUser.get().get("token");
 	}
 
 }
