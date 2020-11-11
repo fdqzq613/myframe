@@ -62,6 +62,8 @@ public class ${table.controllerName} extends BaseController {
 		${entity} ${lowEntity} = new ${entity}();
 		copyPropertiesIgnoreNull(${lowEntity}QueryVo,${lowEntity} );
 		QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>(${lowEntity});
+        queryWrapper.eq("status",1);
+        queryWrapper.orderByDesc("create_time");
 		IPage<${entity}> ${lowEntity}ListPage = ${lowEntity}Service.page(buildPage(${lowEntity}QueryVo), queryWrapper);
 		return getSuccessRespResult(${lowEntity}ListPage);
 	}

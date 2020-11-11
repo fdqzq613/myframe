@@ -237,6 +237,16 @@ public class TokenUtils {
 	}
 	public  Long getUserId(String jwsToken, Key key) {
 		Claims body = getBody(jwsToken, key);
+		if(body==null){
+			return null;
+		}
+		Object userId = body.get("userId");
+		if(userId==null){
+			return null;
+		}
+		if(userId instanceof Integer){
+			return Long.valueOf((Integer)userId);
+		}
 		return body == null ? null : (Long) body.get("userId");
 	}
 

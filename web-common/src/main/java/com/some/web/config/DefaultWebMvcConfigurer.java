@@ -20,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +105,7 @@ public class DefaultWebMvcConfigurer implements WebMvcConfigurer {
 		serializeConfig.put(Long.TYPE, ToStringSerializer.instance);
 		//统一时间格式
 		serializeConfig.put(LocalDateTime.class, LocalDateTimeSerializer.instance);
+		serializeConfig.put(LocalDate.class, LocalDateSerializer.instance);
 		fastJsonConfig.setSerializeConfig(serializeConfig);
 		fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
 		List<MediaType> supportedMediaTypes = new ArrayList<>();
