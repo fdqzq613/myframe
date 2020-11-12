@@ -1,13 +1,13 @@
 package ${package.queryVo};
-
+import ${package.Entity}.${entity};
 
 /**
  * <p>
- * ${table.comment}查询QueryVo
+ * ${table.comment}新增AddVo
  * </p>
  *
  * @author ${author}
  * @since ${date}
  */
-public class ${entity}AddVo {
+public class ${entity}AddVo extends ${entity}{
 }
