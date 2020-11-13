@@ -10,6 +10,9 @@ import com.some.common.id.SnowFlake;
  */
 public class IdUtils {
     private static SnowFlake snowFlake = new SnowFlake(1, 1);
+    public static void resetSnowFlake(long datacenterId, long machineId){
+        snowFlake = new SnowFlake(datacenterId, machineId);
+    }
     public static Long getId(){
         return snowFlake.nextId();
     }

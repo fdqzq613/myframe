@@ -6,6 +6,8 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -14,22 +16,24 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Order(-1)
 public class DataSourceAspect {
-	public DataSourceAspect(){
-		log.debug("选择数据源---");
-	}
-    @Pointcut("@within(com.some.web.db.DataSource) || @annotation(com.some.web.db.DataSource)")
+    public DataSourceAspect(){
+        logger.debug("选择数据源---");
+    }
+    private static final Logger logger = LoggerFactory.getLogger(DataSourceAspect.class);
+    @Pointcut("@within(com.yoya.movie.ext.db.DataSource) || @annotation(com.yoya.movie.ext.db.DataSource)")
     public void pointCut(){
-        log.debug("选择数据源---");
+        logger.debug("选择数据源---");
     }
 
     @Before("pointCut() && @annotation(dataSource)")
     public void doBefore(DataSource dataSource){
-    	log.debug("选择数据源---"+dataSource.value().getValue());
+        logger.debug("选择数据源---"+dataSource.value().getValue());
         DataSourceContextHolder.setDataSource(dataSource.value().getValue());
     }
 
-    @After("pointCut()")
-    public void doAfter(){
-        DataSourceContextHolder.clear();
+    @After("pointCut()&& @annotation(dataSource)")
+    public void doAfter(DataSource dataSource){
+        logger.debug("清除数据源---"+dataSource.value().getValue());
+        DataSourceContextHolder.remove();
     }
 }
