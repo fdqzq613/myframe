@@ -20,6 +20,8 @@ public class DefaultUrlHandler implements UrlHandler{
     public DefaultUrlHandler(UrlConfig urlConfig){
         if(urlConfig.getStaticPath().startsWith("/cdn")){
             this.staticPath = getMergeUrl("http://localhost:"+urlConfig.getPort()+urlConfig.getContextPath(),urlConfig.getStaticPath());
+        }else{
+            this.staticPath = urlConfig.getStaticPath();
         }
         this.internalStaticPath = getMergeUrl("http://localhost:"+urlConfig.getPort()+urlConfig.getContextPath(),urlConfig.getStaticPath());
         this.urlConfig = urlConfig;
