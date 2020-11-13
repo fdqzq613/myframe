@@ -20,7 +20,7 @@ public class DataSourceAspect {
         logger.debug("选择数据源---");
     }
     private static final Logger logger = LoggerFactory.getLogger(DataSourceAspect.class);
-    @Pointcut("@within(com.yoya.movie.ext.db.DataSource) || @annotation(com.yoya.movie.ext.db.DataSource)")
+    @Pointcut("@within(com.some.web.db.DataSource) || @annotation(com.some.web.db.DataSource)")
     public void pointCut(){
         logger.debug("选择数据源---");
     }

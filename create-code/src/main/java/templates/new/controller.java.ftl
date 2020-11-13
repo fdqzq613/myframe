@@ -68,7 +68,7 @@ public class ${table.controllerName} extends BaseController {
 	
 	@ApiOperation(value = "保存${table.comment}", notes = "保存${table.comment}", httpMethod = "POST")
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public RespResult<String>  save(@Validated ${entity}AddVo ${lowEntity}AddVo) {
+	public RespResult<Object>  save(@Validated ${entity}AddVo ${lowEntity}AddVo) {
 	    ${entity} ${lowEntity} = new ${entity}();
 	    copyPropertiesIgnoreNull(${lowEntity}AddVo,${lowEntity} );
 		${lowEntity}.setId(IdUtils.getId());
@@ -76,7 +76,7 @@ public class ${table.controllerName} extends BaseController {
 		${lowEntity}.setCreateTime(timestamp);
 		${lowEntity}.setCreateUserid(getUserId());
 		boolean result = ${lowEntity}Service.save(${lowEntity});
-		return result?getSuccessRespResult():getFailMsg("保存失败");
+		return result?getSuccessRespResult(${lowEntity}.getId()):getFailMsg("保存失败");
 	}
 	
 	@ApiOperation(value = "更新${table.comment}", notes = "更新${table.comment}", httpMethod = "POST")
