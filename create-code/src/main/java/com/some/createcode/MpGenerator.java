@@ -65,7 +65,11 @@ public class MpGenerator {
     /**
      * 页面路径
      */
-    public static String JSPPACKAGEPATH = "/src/main/webapp/jsp";
+    public static String JSP_PACKAGEPATH = "/src/main/webapp/WEB-INF/view";
+    /**
+     * js路径
+     */
+    public static String JS_PACKAGEPATH = "/src/main/webapp/cdn/static/js";
     //模块前缀
     //public static final String ModuleName = "admin";
     public static String DB_USER ;
@@ -91,8 +95,10 @@ public class MpGenerator {
         Map<String, String> myPackage = new HashMap<>();
         String entityName = tableInfo.getEntityName();
         String codePath = rootPath + "/src/main/java/";
-        JSPPACKAGEPATH = JSPPACKAGEPATH.endsWith("/")?JSPPACKAGEPATH:JSPPACKAGEPATH+"/";
-        String jspPath = rootPath + JSPPACKAGEPATH + entityName.toLowerCase();
+        JSP_PACKAGEPATH = JSP_PACKAGEPATH.endsWith("/")?JSP_PACKAGEPATH:JSP_PACKAGEPATH+"/";
+        JS_PACKAGEPATH = JS_PACKAGEPATH.endsWith("/")?JS_PACKAGEPATH:JS_PACKAGEPATH+"/";
+        String jspPath = rootPath + JSP_PACKAGEPATH + entityName.toLowerCase();
+        String jsPath = rootPath + JS_PACKAGEPATH + entityName.toLowerCase();
         myPackage.put("Controller", MpGenerator.CONTROLLER_PACKAGEPATH );
         myPackage.put("Entity", MpGenerator.ENTITY_PACKAGEPATH );
         myPackage.put("Mapper", MpGenerator.DAO_PACKAGEPATH+"." + entityName.toLowerCase() );
@@ -106,11 +112,12 @@ public class MpGenerator {
         filePaths.put("mapperXmlFile", codePath + myPackage.get("Mapper").toLowerCase().replace(".", "/") + "/%sMapper.xml");
         filePaths.put("serviceFile", codePath + myPackage.get("Service").toLowerCase().replace(".", "/") + "/%sService.java");
         filePaths.put("controllerFile", codePath + myPackage.get("Controller").toLowerCase().replace(".", "/") + "/%sController.java");
-        if (JSPPACKAGEPATH != null) {
+        if (JSP_PACKAGEPATH != null) {
             forwardPath = String.format(jspPath + "/%s.jsp", entityName);
             int sub = forwardPath.indexOf("webapp");
             forwardPath = forwardPath.substring(sub + 6);
             filePaths.put("jspFile", jspPath + "/%s.jsp");
+            filePaths.put("jsFile", jsPath + "/%s.jsp");
         }
         filePaths.put("queryVoFile", codePath + myPackage.get("queryVo").toLowerCase().replace(".", "/") + "/%sQueryVo.java");
         filePaths.put("addVoFile", codePath + myPackage.get("queryVo").toLowerCase().replace(".", "/") + "/%sAddVo.java");
@@ -323,18 +330,19 @@ public class MpGenerator {
 
 
     public static void main(String[] args) {
-        MpGenerator.TABLE = new String[]{"t_user"};
+        MpGenerator.TABLE = new String[]{"t_role"};
         MpGenerator.AUTHOR = "qzq";
         //业务包路径
         MpGenerator.YW_PACKAGEPATH = "com.some.yw";
         //实体包路径
         MpGenerator.ENTITY_PACKAGEPATH = "com.some.yw.domain";
-        MpGenerator.JSPPACKAGEPATH = "/src/main/webapp/WEB-INF/view/";
+        MpGenerator.JSP_PACKAGEPATH = "/src/main/webapp/WEB-INF/view/";
+        MpGenerator.JS_PACKAGEPATH = "/src/main/webapp/cdn/static/js";
         //模块前缀
         //public static final String ModuleName = "admin";
         MpGenerator.DB_USER = "root";
         MpGenerator.DB_PWD = "123456";
-        MpGenerator.DB_URL = "jdbc:mysql://127.0.0.1:3396/lncd?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&useSSL=false&serverTimezone=GMT%2B8";
+        MpGenerator.DB_URL = "jdbc:mysql://127.0.0.1:3366/lncd?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&useSSL=false&serverTimezone=GMT%2B8";
         MpGenerator.create(MpGenerator.class);
     }
 }

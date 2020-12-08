@@ -88,8 +88,12 @@ public class MyFreemarkerTemplateEngine extends FreemarkerTemplateEngine{
 					String jspFile =String.format( MpGenerator.filePaths.get("jspFile"),entityName);
 					if (this.isCreate(null,jspFile)) {
 						this.writer(objectMap, this.templateFilePath("/templates/new/list_jsp"), jspFile);
+						//输出js
+						this.writer(objectMap, this.templateFilePath("/templates/new/list_js"), jspFile);
 					}
 				}
+
+
 
 				//输出查询VO
 				if(MpGenerator.filePaths.get("queryVoFile")!=null){
