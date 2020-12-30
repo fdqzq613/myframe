@@ -94,7 +94,7 @@ layui.use(['form', 'layer', 'table', 'laypage', 'laytpl'], function() {
 						},
 
 				 <#list table.fields as field>
-					<#if field.propertyName?contains("userid")||field.propertyName?contains("time")||field.propertyName=="id">
+					<#if field.propertyName?contains("userid")||field.propertyName?contains("Userid")||field.propertyName?contains("Time")||field.propertyName?contains("time")||field.propertyName=="id">
 					<#else>
 						{
 							field: '${field.propertyName}',

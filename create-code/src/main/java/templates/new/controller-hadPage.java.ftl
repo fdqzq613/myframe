@@ -58,12 +58,19 @@ public class ${table.controllerName} extends BaseController {
 	   return "forward:/${JSP_PACKAGEPATH}${lowEntity}/${entity}.jsp";
 	}
 
+	@ApiOperation(value = "编辑${table.comment}", notes = "编辑${table.comment}", httpMethod = "GET")
+	@RequestMapping(value = "/editPage", method = RequestMethod.GET)
+	public String  editPage(String id) {
+	return "forward:/WEB-INF/view/mg/role/addRole.jsp";
+	}
+
 	@ApiOperation(value = "获取${table.comment}列表", notes = "获取${table.comment}列表", httpMethod = "GET")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
 	public RespResult<IPage<${entity}>>  list(@Validated ${entity}QueryVo ${lowEntity}QueryVo) {
 		${entity} ${lowEntity} = new ${entity}();
 		copyPropertiesIgnoreNull(${lowEntity}QueryVo,${lowEntity} );
+        ${lowEntity}.setStatus(1);
 		QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>(${lowEntity});
 		IPage<${entity}> ${lowEntity}ListPage = ${lowEntity}Service.page(buildPage(${lowEntity}QueryVo), queryWrapper);
 		return getSuccessRespResult(${lowEntity}ListPage);
@@ -80,7 +87,7 @@ public class ${table.controllerName} extends BaseController {
 		${lowEntity}.setCreateTime(timestamp);
 		${lowEntity}.setCreateUserid(getUserId());
 		boolean result = ${lowEntity}Service.save(${lowEntity});
-		return result?getSuccessRespResult(${lowEntity}.getId()):getFailMsg("保存失败");
+	    return result?getSuccessMsg(role.getId(),"保存成功"):getFailMsg("保存失败");
 	}
 	
 	@ApiOperation(value = "更新${table.comment}", notes = "更新${table.comment}", httpMethod = "POST")
@@ -93,7 +100,7 @@ public class ${table.controllerName} extends BaseController {
 		${lowEntity}.setModifyTime(timestamp);
 		${lowEntity}.setModifyUserid(getUserId());
 		boolean result = ${lowEntity}Service.updateById(${lowEntity});
-		return result?getSuccessRespResult():getFailMsg("更新失败");
+		return result?getSuccessMsg(null,"更新成功"):getFailMsg("更新失败");
 	}
 	
 	@ApiOperation(value = "删除", notes = "删除", httpMethod = "POST")
@@ -102,7 +109,7 @@ public class ${table.controllerName} extends BaseController {
 	public RespResult<String>  delete(String ids) {
 	    AssertUtils.assertIsNotEmpty(ids, "删除id不能为空");
 		${lowEntity}Service.delete(ids);
-		return getSuccessRespResult();
+		return getSuccessMsg(null,"删除成功");
 	}
 	
 	@ApiOperation(value = "获取详情", notes = "获取详情", httpMethod = "GET")

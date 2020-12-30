@@ -18,12 +18,13 @@ public class DefaultUrlHandler implements UrlHandler{
     private String staticPath;
     private UrlConfig urlConfig;
     public DefaultUrlHandler(UrlConfig urlConfig){
-        if(urlConfig.getStaticPath().startsWith("/cdn")){
+        if(!urlConfig.getStaticPath().startsWith("http")){
             this.staticPath = getMergeUrl("http://localhost:"+urlConfig.getPort()+urlConfig.getContextPath(),urlConfig.getStaticPath());
+            this.internalStaticPath = getMergeUrl("http://localhost:"+urlConfig.getPort()+urlConfig.getContextPath(),urlConfig.getStaticPath());
         }else{
             this.staticPath = urlConfig.getStaticPath();
+            this.internalStaticPath = urlConfig.getStaticPath();
         }
-        this.internalStaticPath = getMergeUrl("http://localhost:"+urlConfig.getPort()+urlConfig.getContextPath(),urlConfig.getStaticPath());
         this.urlConfig = urlConfig;
     }
     @Override

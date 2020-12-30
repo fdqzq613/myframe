@@ -30,6 +30,7 @@ public class JspField {
      * 是否隐藏
      */
     private boolean hidden;
+    private String hiddenStr="";
     private boolean convert;
     private boolean keyFlag;
     /**
@@ -47,32 +48,15 @@ public class JspField {
      */
     private Map<String, Object> customMap;
 
-    public boolean isConvert() {
-        return convert;
+
+
+
+    public String getHiddenStr() {
+        return hiddenStr;
     }
 
-    public void setConvert(boolean convert) {
-        this.convert = convert;
-    }
-
-    protected void setConvert(StrategyConfig strategyConfig) {
-        if (strategyConfig.isEntityTableFieldAnnotationEnable()) {
-            this.convert = true;
-            return;
-        }
-        if (strategyConfig.isCapitalModeNaming(name)) {
-            this.convert = false;
-        } else {
-            // 转换字段
-            if (NamingStrategy.underline_to_camel == strategyConfig.getColumnNaming()) {
-                // 包含大写处理
-                if (StringUtils.containsUpperCase(name)) {
-                    this.convert = true;
-                }
-            } else if (!name.equals(propertyName)) {
-                this.convert = true;
-            }
-        }
+    public void setHiddenStr(String hiddenStr) {
+        this.hiddenStr = hiddenStr;
     }
 
     public boolean isKeyFlag() {
@@ -116,15 +100,11 @@ public class JspField {
     }
 
     public String getPropertyName() {
-        if(StringUtils.isEmpty(propertyName)){
-            return name;
-        }
         return propertyName;
     }
 
-    public void setPropertyName(StrategyConfig strategyConfig, String propertyName) {
+    public void setPropertyName(String propertyName) {
         this.propertyName = propertyName;
-        this.setConvert(strategyConfig);
     }
 
     public IColumnType getColumnType() {

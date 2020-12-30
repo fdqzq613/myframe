@@ -87,14 +87,14 @@ layui.use(['form', 'layer', 'table', 'laypage', 'laytpl'], function() {
 			cols: [
 				[
 						{
-							field: 'id',
+							field: 'no',
 							type: "numbers",
-							title: 'id',
+							title: '编号',
 							align: "center"
 						},
 				<#-- ----------  BEGIN 字段循环遍历  ---------->
-				 <#list table.fields as field>
-					<#if field.propertyName?contains("userid")||field.propertyName?contains("time")||field.propertyName=="id">
+				 <#list jspFields as field>
+					<#if field.propertyName?contains("userid")||field.propertyName?contains("createTime")||field.propertyName?contains("Userid")||field.propertyName?contains("time")||field.propertyName=="id"||field.propertyName=="status">
 					<#else>
 						{
 							field: '${field.propertyName}',

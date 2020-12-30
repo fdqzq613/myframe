@@ -42,10 +42,9 @@
 	</div>
 	<form class="layui-form" lay-filter="form1">
 		<#-- ----------  BEGIN 字段循环遍历  ---------->
-		<#list table.fields as field>
-		<input type="text" name="id" class="layui-input"  style="display: none;" />
+		<#list jspFields as field>
 		<#if field.propertyName?contains("time")>
-		<div class="layui-form-item">
+		<div class="layui-form-item" ${field.hiddenStr}>
 				<#if field.comment!?length gt 0>
 					<label class="layui-form-label">${field.comment}</label>
 				<#else>
@@ -56,7 +55,7 @@
 			</div>
 		</div>
 		<#else>
-		<div class="layui-form-item">
+		<div class="layui-form-item"  ${field.hiddenStr}>
 			<#if field.comment!?length gt 0>
 			<label class="layui-form-label">${field.comment}</label>
 			<#else>

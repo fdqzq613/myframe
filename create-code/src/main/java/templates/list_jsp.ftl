@@ -34,9 +34,9 @@
 <body>
 <div class="right-side">
     <div class="title-bar">
-        <div class="layui-input-inline">${table.comment}</div>
+        <div class="layui-input-inline"></div>
         <div class="layui-input-inline">
-            <button class="layui-btn" id="addBtn">添加${table.comment}</button>
+            <button class="layui-btn" id="addBtn">添加</button>
         </div>
         <div class="right">
             <div class="layui-input-inline">

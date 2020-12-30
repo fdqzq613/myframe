@@ -177,8 +177,9 @@ public class MyFreemarkerTemplateEngine extends FreemarkerTemplateEngine{
 		for(TableField tableField:tableInfo.getFields()){
 			JspField jspField = new JspField();
 			BeanUtils.copyPropertiesIgnoreNull(tableField,jspField);
-			if(Arrays.binarySearch(hiddenLs,jspField.getName())>0){
+			if(Arrays.binarySearch(hiddenLs,jspField.getName())>=0){
 				jspField.setHidden(true);
+				jspField.setHiddenStr("hidden=\"true\"");
 			}
 			ls.add(jspField);
 		}
@@ -186,13 +187,11 @@ public class MyFreemarkerTemplateEngine extends FreemarkerTemplateEngine{
 			@Override
 			public int compare(JspField o1, JspField o2) {
 				if(o1.isHidden()&&!o2.isHidden()){
-					return -1;
+					return 1;
 				}else if(o1.isHidden()&&o2.isHidden()){
 					return o1.getPropertyName().compareTo(o2.getPropertyName());
 				}else if(!o1.isHidden()&&o2.isHidden()){
-					return 1;
-				}else if(o1.getPropertyType().toLowerCase().indexOf("string")!=-1&&o2.getPropertyType().toLowerCase().indexOf("string")==-1){
-				  return 1;
+					return -1;
 				}else{
 					return o1.getPropertyName().compareTo(o2.getPropertyName());
 				}

@@ -42,7 +42,7 @@ public class LocalDateTimeConfig {
             @Override
             public LocalDateTime convert(@NotNull String source) {
                 if (StringUtils.hasText(source)) {
-                    return LocalDateTime.parse(source, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+                    return LocalDateTime.parse(source, dateTimeFormat);
                 }
                 return null;
             }
