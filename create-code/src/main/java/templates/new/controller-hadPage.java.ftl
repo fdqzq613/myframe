@@ -21,10 +21,9 @@ import com.some.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-<#if restControllerStyle>
-import org.springframework.web.bind.annotation.RestController;
-<#else>
-</#if>
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Controller;
+
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
 </#if>
@@ -37,11 +36,8 @@ import ${superControllerClassPackage};
  * @author ${author}
  * @since ${date}
  */
-<#if restControllerStyle>
-@RestController
-<#else>
-@RestController
-</#if>
+
+@Controller
 @RequestMapping("${requestmapping_pre}")
 <#if kotlin>
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
@@ -56,9 +52,15 @@ public class ${table.controllerName} extends BaseController {
     @Autowired
     private ${entity}Service ${lowEntity}Service;
 
+	@ApiOperation(value = "${table.comment}列表页面", notes = "${table.comment}列表页面", httpMethod = "GET")
+	@RequestMapping(value = "/page", method = RequestMethod.GET)
+	public String  page() {
+	   return "forward:/${JSP_PACKAGEPATH}${lowEntity}/${entity}.jsp";
+	}
 
 	@ApiOperation(value = "获取${table.comment}列表", notes = "获取${table.comment}列表", httpMethod = "GET")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
 	public RespResult<IPage<${entity}>>  list(@Validated ${entity}QueryVo ${lowEntity}QueryVo) {
 		${entity} ${lowEntity} = new ${entity}();
 		copyPropertiesIgnoreNull(${lowEntity}QueryVo,${lowEntity} );
@@ -69,6 +71,7 @@ public class ${table.controllerName} extends BaseController {
 	
 	@ApiOperation(value = "保存${table.comment}", notes = "保存${table.comment}", httpMethod = "POST")
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
 	public RespResult<Object>  save(@Validated ${entity}AddVo ${lowEntity}AddVo) {
 	    ${entity} ${lowEntity} = new ${entity}();
 	    copyPropertiesIgnoreNull(${lowEntity}AddVo,${lowEntity} );
@@ -82,6 +85,7 @@ public class ${table.controllerName} extends BaseController {
 	
 	@ApiOperation(value = "更新${table.comment}", notes = "更新${table.comment}", httpMethod = "POST")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@ResponseBody
 	public RespResult<String>  update(@Validated ${entity}UpdateVo ${lowEntity}UpdateVo) {
 	    ${entity} ${lowEntity} = new ${entity}();
 	    copyPropertiesIgnoreNull(${lowEntity}UpdateVo,${lowEntity} );
@@ -94,6 +98,7 @@ public class ${table.controllerName} extends BaseController {
 	
 	@ApiOperation(value = "删除", notes = "删除", httpMethod = "POST")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@ResponseBody
 	public RespResult<String>  delete(String ids) {
 	    AssertUtils.assertIsNotEmpty(ids, "删除id不能为空");
 		${lowEntity}Service.delete(ids);
@@ -102,6 +107,7 @@ public class ${table.controllerName} extends BaseController {
 	
 	@ApiOperation(value = "获取详情", notes = "获取详情", httpMethod = "GET")
 	@RequestMapping(value = "/getDetail", method = RequestMethod.GET)
+	@ResponseBody
 	public RespResult<${entity}> getDetail(String id) {
 		AssertUtils.assertIsNotEmpty(id, "id不能为空");
 		return getSuccessRespResult(${lowEntity}Service.getById(id));

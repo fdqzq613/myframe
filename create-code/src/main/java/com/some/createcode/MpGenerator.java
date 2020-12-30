@@ -32,6 +32,14 @@ public class MpGenerator {
     public static String[] TABLE = new String[]{"t_user"};
     public static String AUTHOR = "qzq";
     /**
+     * 是否需要生成前端界面相关；默认生成
+     */
+    public static boolean isHadHtml = true;
+    /**
+     * 访问路径前缀，规则 REQUESTMAPPING_PRE+"/实体类名称"
+     */
+    public static String REQUESTMAPPING_PRE = "";
+    /**
      * 业务包路径 如："com.some.yw"
      */
     public static String YW_PACKAGEPATH;
@@ -117,7 +125,7 @@ public class MpGenerator {
             int sub = forwardPath.indexOf("webapp");
             forwardPath = forwardPath.substring(sub + 6);
             filePaths.put("jspFile", jspPath + "/%s.jsp");
-            filePaths.put("jsFile", jsPath + "/%s.jsp");
+            filePaths.put("jsFile", jsPath + "/%s.js");
         }
         filePaths.put("queryVoFile", codePath + myPackage.get("queryVo").toLowerCase().replace(".", "/") + "/%sQueryVo.java");
         filePaths.put("addVoFile", codePath + myPackage.get("queryVo").toLowerCase().replace(".", "/") + "/%sAddVo.java");
@@ -334,6 +342,8 @@ public class MpGenerator {
         MpGenerator.AUTHOR = "qzq";
         //业务包路径
         MpGenerator.YW_PACKAGEPATH = "com.some.yw";
+        //访问路径前缀
+        MpGenerator.REQUESTMAPPING_PRE = "yw";
         //实体包路径
         MpGenerator.ENTITY_PACKAGEPATH = "com.some.yw.domain";
         MpGenerator.JSP_PACKAGEPATH = "/src/main/webapp/WEB-INF/view/";

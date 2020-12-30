@@ -82,7 +82,7 @@ layui.use(['form', 'layer', 'table', 'laypage', 'laytpl'], function() {
 			page: {
 				curr: localStorage.pageNo
 			},
-			url: __global_ctx + "mg/${lowEntity}/list",
+			url: __global_ctx + "${requestmapping_pre}/list",
 			autoLoad: true,
 			cols: [
 				[
@@ -92,7 +92,7 @@ layui.use(['form', 'layer', 'table', 'laypage', 'laytpl'], function() {
 							title: 'id',
 							align: "center"
 						},
-
+				<#-- ----------  BEGIN 字段循环遍历  ---------->
 				 <#list table.fields as field>
 					<#if field.propertyName?contains("userid")||field.propertyName?contains("time")||field.propertyName=="id">
 					<#else>

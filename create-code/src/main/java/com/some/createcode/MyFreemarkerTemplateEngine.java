@@ -1,13 +1,20 @@
 package com.some.createcode;
 
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
+import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.some.web.utils.BeanUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -79,18 +86,40 @@ public class MyFreemarkerTemplateEngine extends FreemarkerTemplateEngine{
 					//String controllerFile = String.format((pathInfo.get(ConstVal.CONTROLLER_PATH) + File.separator + tableInfo.getControllerName() + this.suffixJavaOrKt()), entityName);
 					String controllerFile =String.format( MpGenerator.filePaths.get("controllerFile"),entityName,entityName);
 					if (this.isCreate(FileType.CONTROLLER,controllerFile)) {
-						this.writer(objectMap, this.templateFilePath("/templates/new/controller.java"), controllerFile);
+						if(MpGenerator.isHadHtml){
+							this.writer(objectMap, this.templateFilePath("/templates/new/controller-hadPage.java"), controllerFile);
+						}else {
+							this.writer(objectMap, this.templateFilePath("/templates/new/controller.java"), controllerFile);
+						}
 					}
 				}
 
 				//输出jsp
-				if(MpGenerator.filePaths.get("jspFile")!=null){
+				if(MpGenerator.filePaths.get("jspFile")!=null&&MpGenerator.isHadHtml){
 					String jspFile =String.format( MpGenerator.filePaths.get("jspFile"),entityName);
 					if (this.isCreate(null,jspFile)) {
 						this.writer(objectMap, this.templateFilePath("/templates/new/list_jsp"), jspFile);
-						//输出js
-						this.writer(objectMap, this.templateFilePath("/templates/new/list_js"), jspFile);
 					}
+
+					String addJspFile =String.format( MpGenerator.filePaths.get("jspFile"),"add"+entityName);
+					if (this.isCreate(null,addJspFile)) {
+						this.writer(objectMap, this.templateFilePath("/templates/new/add_jsp"), addJspFile);
+					}
+				}
+
+				//输出js
+				if(MpGenerator.filePaths.get("jsFile")!=null&&MpGenerator.isHadHtml){
+					String jsFile =String.format( MpGenerator.filePaths.get("jsFile"),entityName);
+					if (this.isCreate(null,jsFile)) {
+						//输出列表js
+						this.writer(objectMap, this.templateFilePath("/templates/new/list_js"), jsFile);
+					}
+					String addJsFile =String.format( MpGenerator.filePaths.get("jsFile"),"add"+entityName);
+					if (this.isCreate(null,addJsFile)) {
+						//输出添加js
+						this.writer(objectMap, this.templateFilePath("/templates/new/add_js"), addJsFile);
+					}
+
 				}
 
 
@@ -127,7 +156,49 @@ public class MyFreemarkerTemplateEngine extends FreemarkerTemplateEngine{
 		String entityName = tableInfo.getEntityName();
 		Map<String,String> myPackage = MpGenerator.initPath(tableInfo);
 		objectMap.put("package", myPackage);
+		String jsp_packagepath = MpGenerator.JSP_PACKAGEPATH.indexOf("WEB-INF")!=-1?MpGenerator.JSP_PACKAGEPATH.substring(MpGenerator.JSP_PACKAGEPATH.indexOf("WEB-INF")):MpGenerator.JSP_PACKAGEPATH;
+		String js_packagepath = MpGenerator.JS_PACKAGEPATH.indexOf("WEB-INF")!=-1?MpGenerator.JS_PACKAGEPATH.substring(MpGenerator.JS_PACKAGEPATH.indexOf("WEB-INF")):MpGenerator.JS_PACKAGEPATH;
+		jsp_packagepath = jsp_packagepath.endsWith("/")?jsp_packagepath:jsp_packagepath+"/";
+		js_packagepath = js_packagepath.endsWith("/")?js_packagepath:js_packagepath+"/";
+		objectMap.put("JSP_PACKAGEPATH", jsp_packagepath);
+		objectMap.put("JS_PACKAGEPATH",js_packagepath);
+		String requestmapping_pre = tableInfo.getEntityPath();
+		if(StringUtils.isNotEmpty(MpGenerator.REQUESTMAPPING_PRE)){
+			requestmapping_pre = MpGenerator.REQUESTMAPPING_PRE+"/"+tableInfo.getEntityPath();
+		}
+		//requestmapping_pre = requestmapping_pre.startsWith("/")?requestmapping_pre:"/"+requestmapping_pre;
+		objectMap.put("requestmapping_pre",requestmapping_pre);
+
 		objectMap.put("lowEntity", org.apache.commons.lang3.StringUtils.uncapitalize(entityName));
+		String[] hiddenLs = new String[]{"id","create_userid","create_time","modify_userid","modify_time","status"};
+		Arrays.sort(hiddenLs);
+		//自动排序 针对jsp界面的输出
+		List<JspField> ls = new ArrayList<>();
+		for(TableField tableField:tableInfo.getFields()){
+			JspField jspField = new JspField();
+			BeanUtils.copyPropertiesIgnoreNull(tableField,jspField);
+			if(Arrays.binarySearch(hiddenLs,jspField.getName())>0){
+				jspField.setHidden(true);
+			}
+			ls.add(jspField);
+		}
+		ls.sort(new Comparator<JspField>() {
+			@Override
+			public int compare(JspField o1, JspField o2) {
+				if(o1.isHidden()&&!o2.isHidden()){
+					return -1;
+				}else if(o1.isHidden()&&o2.isHidden()){
+					return o1.getPropertyName().compareTo(o2.getPropertyName());
+				}else if(!o1.isHidden()&&o2.isHidden()){
+					return 1;
+				}else if(o1.getPropertyType().toLowerCase().indexOf("string")!=-1&&o2.getPropertyType().toLowerCase().indexOf("string")==-1){
+				  return 1;
+				}else{
+					return o1.getPropertyName().compareTo(o2.getPropertyName());
+				}
+			}
+		});
+		objectMap.put("jspFields",ls);
 		return objectMap;
 	}
 	/**
