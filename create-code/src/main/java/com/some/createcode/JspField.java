@@ -99,6 +99,17 @@ public class JspField {
         this.type = type;
     }
 
+    public void resetComment() {
+        if(StringUtils.isNotEmpty(comment)){
+            comment = comment.trim();
+            comment = comment.split(";")[0];
+            comment = comment.split(",")[0];
+            comment = comment.split("，")[0];
+            comment = comment.split("：")[0];
+            comment = comment.split(":")[0];
+            comment = comment.split(" ")[0];
+        }
+    }
     public String getPropertyName() {
         return propertyName;
     }

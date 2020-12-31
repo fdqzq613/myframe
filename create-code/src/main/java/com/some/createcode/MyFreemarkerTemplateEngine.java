@@ -177,6 +177,7 @@ public class MyFreemarkerTemplateEngine extends FreemarkerTemplateEngine{
 		for(TableField tableField:tableInfo.getFields()){
 			JspField jspField = new JspField();
 			BeanUtils.copyPropertiesIgnoreNull(tableField,jspField);
+			jspField.resetComment();
 			if(Arrays.binarySearch(hiddenLs,jspField.getName())>=0){
 				jspField.setHidden(true);
 				jspField.setHiddenStr("hidden=\"true\"");
