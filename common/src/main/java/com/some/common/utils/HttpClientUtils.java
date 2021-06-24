@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -134,6 +135,59 @@ public class HttpClientUtils {
 				}
 			} catch (Exception e) {
 				logger.error(e.getMessage(),e);
+			}
+		}
+		return str;
+	}
+	/**
+	 * application/json格式发送json数据
+	 *
+	 * @param url
+	 * @param json
+	 * @return
+	 */
+	public static String httpPostByjson(String url, String json) {
+		return httpPostByjson(url,json,null);
+	}
+	/**
+	 * application/json格式发送json数据
+	 *
+	 * @param url
+	 * @param json
+	 * @return
+	 */
+	public static String httpPostByjson(String url, String json,Map<String,String> header) {
+		String str;
+		MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+		Response response = null;
+		try {
+			// 创建一个RequestBody(参数1：数据类型 参数2传递的json串)
+			// json为String类型的json数据
+			RequestBody requestBody = RequestBody.create(JSON, json);
+			Request.Builder builder = new Request.Builder().url(url);
+			if(header!=null&&header.size()>0){
+				header.forEach((k,v)->{
+					builder.header(k,v);
+				});
+			}
+			Request request = builder.post(requestBody).build();
+
+			response = httpClient.newCall(request).execute();
+			str = response.body().string();
+			if (response.code() != 200) {
+				logger.error("http请求异常,异常编码:{},异常信息:{}", response.code(), response.message());
+				throw new RespException("http请求异常,异常编码:" + response.code() + ",异常信息：" + response.message());
+			}
+		} catch (Exception e) {
+			logger.error("http post:{}，出错{}", url, e.getMessage(), e);
+			throw new RespException("请求出错," + e.getMessage());
+		} finally {
+			try {
+				if (response != null) {
+					response.body().close();
+				}
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
 			}
 		}
 		return str;

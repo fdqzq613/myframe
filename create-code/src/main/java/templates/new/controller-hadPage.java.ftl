@@ -87,7 +87,7 @@ public class ${table.controllerName} extends BaseController {
 		${lowEntity}.setCreateTime(timestamp);
 		${lowEntity}.setCreateUserid(getUserId());
 		boolean result = ${lowEntity}Service.save(${lowEntity});
-	    return result?getSuccessMsg(role.getId(),"保存成功"):getFailMsg("保存失败");
+	    return result?getSuccessMsg(${lowEntity}.getId(),"保存成功"):getFailMsg("保存失败");
 	}
 	
 	@ApiOperation(value = "更新${table.comment}", notes = "更新${table.comment}", httpMethod = "POST")
