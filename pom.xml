@@ -26,7 +26,7 @@
         <dubbo.version>2.7.7</dubbo.version>
         <mybatis-plus-boot-starter.version>3.0.5</mybatis-plus-boot-starter.version>
 
-        <elasticsearch.version>7.7.0</elasticsearch.version>
+        <elasticsearch.version>7.14.0</elasticsearch.version>
     </properties>
 
     <repositories>
